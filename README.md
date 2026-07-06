@@ -4,6 +4,6 @@ Aplicación Android para la gestión de rutinas de gimnasio y seguimiento del pr
 
 Tecnologías previstas:
 - Android Studio
-- Kotlin o Java
+- Java
 - GitHub para control de versiones
 - Notion para gestión ágil del proyecto
