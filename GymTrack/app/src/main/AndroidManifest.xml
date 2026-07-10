@@ -16,6 +16,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.CrearRutinaActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
 

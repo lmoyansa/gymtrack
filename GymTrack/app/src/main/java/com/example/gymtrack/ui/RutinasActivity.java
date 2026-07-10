@@ -1,6 +1,7 @@
 package com.example.gymtrack.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,11 +38,18 @@ public class RutinasActivity extends Activity {
 
         cargarRutinas();
 
-        btnCrearRutina.setOnClickListener(v ->
-                Toast.makeText(this, "Creación de rutina pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
+        btnCrearRutina.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CrearRutinaActivity.class);
+            startActivity(intent);
+        });
 
         btnVolverHome.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cargarRutinas();
     }
 
     private void cargarRutinas() {
