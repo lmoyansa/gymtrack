@@ -1,0 +1,43 @@
+package com.example.gymtrack.ui;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.example.gymtrack.R;
+
+public class MainActivity extends Activity {
+
+    private Button btnMisRutinas;
+    private Button btnIniciarEntrenamiento;
+    private Button btnHistorial;
+    private Button btnTemporizador;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btnMisRutinas = findViewById(R.id.btnMisRutinas);
+        btnIniciarEntrenamiento = findViewById(R.id.btnIniciarEntrenamiento);
+        btnHistorial = findViewById(R.id.btnHistorial);
+        btnTemporizador = findViewById(R.id.btnTemporizador);
+
+        btnMisRutinas.setOnClickListener(v ->
+                Toast.makeText(this, "Pantalla de rutinas pendiente de implementar", Toast.LENGTH_SHORT).show()
+        );
+
+        btnIniciarEntrenamiento.setOnClickListener(v ->
+                Toast.makeText(this, "Registro de entrenamiento pendiente de implementar", Toast.LENGTH_SHORT).show()
+        );
+
+        btnHistorial.setOnClickListener(v ->
+                Toast.makeText(this, "Historial pendiente de implementar", Toast.LENGTH_SHORT).show()
+        );
+
+        btnTemporizador.setOnClickListener(v ->
+                Toast.makeText(this, "Temporizador pendiente de implementar", Toast.LENGTH_SHORT).show()
+        );
+    }
+}
