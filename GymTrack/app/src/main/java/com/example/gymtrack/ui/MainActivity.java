@@ -1,6 +1,7 @@
 package com.example.gymtrack.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -24,9 +25,10 @@ public class MainActivity extends Activity {
         btnHistorial = findViewById(R.id.btnHistorial);
         btnTemporizador = findViewById(R.id.btnTemporizador);
 
-        btnMisRutinas.setOnClickListener(v ->
-                Toast.makeText(this, "Pantalla de rutinas pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
+        btnMisRutinas.setOnClickListener(v -> {
+            Intent intent = new Intent(this, RutinasActivity.class);
+            startActivity(intent);
+        });
 
         btnIniciarEntrenamiento.setOnClickListener(v ->
                 Toast.makeText(this, "Registro de entrenamiento pendiente de implementar", Toast.LENGTH_SHORT).show()

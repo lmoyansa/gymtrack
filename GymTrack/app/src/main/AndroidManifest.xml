@@ -12,6 +12,10 @@
         android:theme="@style/Theme.GymTrack">
 
         <activity
+            android:name=".ui.RutinasActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
 
