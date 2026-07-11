@@ -1,6 +1,7 @@
 package com.example.gymtrack.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -49,7 +50,12 @@ public class DetalleRutinaActivity extends Activity {
         idRutina = getIntent().getIntExtra(EXTRA_ID_RUTINA, -1);
 
         if (idRutina == -1) {
-            Toast.makeText(this, "No se ha recibido una rutina válida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    this,
+                    "No se ha recibido una rutina válida",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             finish();
             return;
         }
@@ -66,11 +72,7 @@ public class DetalleRutinaActivity extends Activity {
         });
 
         btnEliminarRutina.setOnClickListener(v ->
-                Toast.makeText(
-                        this,
-                        "Eliminación de rutina pendiente de implementar",
-                        Toast.LENGTH_SHORT
-                ).show()
+                mostrarConfirmacionEliminar()
         );
 
         btnAnadirEjercicio.setOnClickListener(v ->
@@ -135,6 +137,39 @@ public class DetalleRutinaActivity extends Activity {
             tvDescripcionRutinaDetalle.setText("Descripción: no especificada");
         } else {
             tvDescripcionRutinaDetalle.setText("Descripción: " + descripcion);
+        }
+    }
+
+    private void mostrarConfirmacionEliminar() {
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar rutina")
+                .setMessage(
+                        "¿Seguro que quieres eliminar la rutina \""
+                                + rutinaActual.getNombre()
+                                + "\"?"
+                )
+                .setPositiveButton("Eliminar", (dialog, which) -> eliminarRutina())
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void eliminarRutina() {
+        boolean eliminada = rutinaRepository.eliminarRutina(idRutina);
+
+        if (eliminada) {
+            Toast.makeText(
+                    this,
+                    "Rutina eliminada correctamente",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            finish();
+        } else {
+            Toast.makeText(
+                    this,
+                    "No se pudo eliminar la rutina",
+                    Toast.LENGTH_SHORT
+            ).show();
         }
     }
 }
