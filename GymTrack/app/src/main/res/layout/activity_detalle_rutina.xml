@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutDetalleRutina"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#F4F6F8">
+
+    <TextView
+        android:id="@+id/tvTituloDetalleRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detalle de rutina"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#1E1E1E"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tvNombreRutinaDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nombre de la rutina"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#1E1E1E"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvObjetivoRutinaDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Objetivo"
+        android:textSize="16sp"
+        android:textColor="#444444"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvDescripcionRutinaDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textSize="16sp"
+        android:textColor="#444444"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnEditarRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Editar rutina"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnEliminarRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar rutina"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnAnadirEjercicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir ejercicio"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnEmpezarEntrenamiento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Empezar entrenamiento"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnVolverListadoRutinas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver" />
+
+</LinearLayout>

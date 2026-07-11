@@ -91,9 +91,13 @@ public class RutinasActivity extends Activity {
 
             tvRutina.setBackgroundColor(getResources().getColor(android.R.color.white));
 
-            tvRutina.setOnClickListener(v ->
-                    Toast.makeText(this, "Detalle de rutina pendiente de implementar", Toast.LENGTH_SHORT).show()
-            );
+            final int idRutinaSeleccionada = rutina.getIdRutina();
+
+            tvRutina.setOnClickListener(v -> {
+                Intent intent = new Intent(this, DetalleRutinaActivity.class);
+                intent.putExtra(DetalleRutinaActivity.EXTRA_ID_RUTINA, idRutinaSeleccionada);
+                startActivity(intent);
+            });
 
             contenedorRutinas.addView(tvRutina);
         }
