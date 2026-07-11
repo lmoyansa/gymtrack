@@ -1,6 +1,7 @@
 package com.example.gymtrack.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class DetalleRutinaActivity extends Activity {
 
     private RutinaRepository rutinaRepository;
     private Rutina rutinaActual;
+    private int idRutina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,40 +46,83 @@ public class DetalleRutinaActivity extends Activity {
 
         rutinaRepository = RutinaRepository.getInstance();
 
-        int idRutina = getIntent().getIntExtra(EXTRA_ID_RUTINA, -1);
+        idRutina = getIntent().getIntExtra(EXTRA_ID_RUTINA, -1);
+
+        if (idRutina == -1) {
+            Toast.makeText(this, "No se ha recibido una rutina válida", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        cargarRutina();
+
+        btnEditarRutina.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditarRutinaActivity.class);
+            intent.putExtra(
+                    EditarRutinaActivity.EXTRA_ID_RUTINA,
+                    rutinaActual.getIdRutina()
+            );
+            startActivity(intent);
+        });
+
+        btnEliminarRutina.setOnClickListener(v ->
+                Toast.makeText(
+                        this,
+                        "Eliminación de rutina pendiente de implementar",
+                        Toast.LENGTH_SHORT
+                ).show()
+        );
+
+        btnAnadirEjercicio.setOnClickListener(v ->
+                Toast.makeText(
+                        this,
+                        "Añadir ejercicio pendiente de implementar",
+                        Toast.LENGTH_SHORT
+                ).show()
+        );
+
+        btnEmpezarEntrenamiento.setOnClickListener(v ->
+                Toast.makeText(
+                        this,
+                        "Registro de entrenamiento pendiente de implementar",
+                        Toast.LENGTH_SHORT
+                ).show()
+        );
+
+        btnVolverListadoRutinas.setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (rutinaRepository != null && idRutina != -1) {
+            cargarRutina();
+        }
+    }
+
+    private void cargarRutina() {
         rutinaActual = rutinaRepository.obtenerRutinaPorId(idRutina);
 
         if (rutinaActual == null) {
-            Toast.makeText(this, "No se ha encontrado la rutina", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    this,
+                    "No se ha encontrado la rutina",
+                    Toast.LENGTH_SHORT
+            ).show();
+
             finish();
             return;
         }
 
         mostrarDatosRutina();
-
-        btnEditarRutina.setOnClickListener(v ->
-                Toast.makeText(this, "Edición de rutina pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
-        btnEliminarRutina.setOnClickListener(v ->
-                Toast.makeText(this, "Eliminación de rutina pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
-        btnAnadirEjercicio.setOnClickListener(v ->
-                Toast.makeText(this, "Añadir ejercicio pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
-        btnEmpezarEntrenamiento.setOnClickListener(v ->
-                Toast.makeText(this, "Registro de entrenamiento pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
-        btnVolverListadoRutinas.setOnClickListener(v -> finish());
     }
 
     private void mostrarDatosRutina() {
         tvNombreRutinaDetalle.setText(rutinaActual.getNombre());
 
         String objetivo = rutinaActual.getObjetivo();
+
         if (objetivo == null || objetivo.trim().isEmpty()) {
             tvObjetivoRutinaDetalle.setText("Objetivo: no especificado");
         } else {
@@ -85,6 +130,7 @@ public class DetalleRutinaActivity extends Activity {
         }
 
         String descripcion = rutinaActual.getDescripcion();
+
         if (descripcion == null || descripcion.trim().isEmpty()) {
             tvDescripcionRutinaDetalle.setText("Descripción: no especificada");
         } else {
