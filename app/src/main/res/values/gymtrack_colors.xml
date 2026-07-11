@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Superficies -->
+    <color name="gt_background">#0C0C0E</color>
+    <color name="gt_card">#17171A</color>
+    <color name="gt_secondary">#1E1E22</color>
+    <color name="gt_secondary_pressed">#29292F</color>
+
+    <!-- Bordes -->
+    <color name="gt_border">#14FFFFFF</color>
+
+    <!-- Textos -->
+    <color name="gt_foreground">#F0F0F2</color>
+    <color name="gt_muted">#8A8A96</color>
+
+    <!-- Acento -->
+    <color name="gt_primary">#C8F53A</color>
+    <color name="gt_primary_pressed">#AED52F</color>
+    <color name="gt_primary_foreground">#0C0C0E</color>
+
+    <!-- Destructive -->
+    <color name="gt_destructive">#E8334A</color>
+    <color name="gt_destructive_surface">#1AE8334A</color>
+    <color name="gt_destructive_surface_pressed">#2EE8334A</color>
+    <color name="gt_destructive_border">#33E8334A</color>
+
+</resources>

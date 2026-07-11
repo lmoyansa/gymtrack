@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="gt_screen_padding">24dp</dimen>
+
+    <dimen name="gt_gap_small">8dp</dimen>
+    <dimen name="gt_gap_medium">16dp</dimen>
+    <dimen name="gt_gap_large">24dp</dimen>
+
+    <dimen name="gt_card_padding">20dp</dimen>
+
+    <dimen name="gt_card_radius">16dp</dimen>
+    <dimen name="gt_button_radius">12dp</dimen>
+    <dimen name="gt_input_radius">12dp</dimen>
+    <dimen name="gt_chip_radius">8dp</dimen>
+
+    <dimen name="gt_button_height">56dp</dimen>
+    <dimen name="gt_input_height">56dp</dimen>
+
+</resources>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRutinas"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gt_background"
+    android:orientation="vertical"
+    android:padding="@dimen/gt_screen_padding">
+
+    <TextView
+        style="@style/GymTrack_Overline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GYMTRACK" />
+
+    <TextView
+        android:id="@+id/tvTituloRutinas"
+        style="@style/GymTrack_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gt_gap_small"
+        android:text="Mis rutinas" />
+
+    <TextView
+        style="@style/GymTrack_Muted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gt_gap_small"
+        android:text="Crea y organiza tus planes de entrenamiento." />
+
+    <Button
+        android:id="@+id/btnCrearRutina"
+        style="@style/GymTrack_Button_Primary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gt_button_height"
+        android:layout_marginTop="@dimen/gt_gap_large"
+        android:text="Crear nueva rutina" />
+
+    <TextView
+        style="@style/GymTrack_SectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gt_gap_large"
+        android:layout_marginBottom="@dimen/gt_gap_medium"
+        android:text="Rutinas disponibles" />
+
+    <TextView
+        android:id="@+id/tvMensajeVacio"
+        style="@style/GymTrack_Muted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gt_background_card"
+        android:gravity="center"
+        android:padding="@dimen/gt_card_padding"
+        android:text="Todavía no tienes rutinas creadas.\nCrea la primera para comenzar."
+        android:textAlignment="center" />
+
+    <ScrollView
+        android:id="@+id/scrollRutinas"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/gt_gap_medium"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/contenedorRutinas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/gt_gap_small" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnVolverHome"
+        style="@style/GymTrack_Button_Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/gt_button_height"
+        android:text="Volver al inicio" />
+
+</LinearLayout>

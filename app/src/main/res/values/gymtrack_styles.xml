@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GymTrack_Overline">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/gt_primary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Title">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/gt_foreground</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_SectionTitle">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/gt_foreground</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Body">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/gt_foreground</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Muted">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/gt_muted</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Label">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/gt_muted</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Input">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/gt_foreground</item>
+        <item name="android:textColorHint">@color/gt_muted</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/gt_background_input</item>
+        <item name="android:minHeight">@dimen/gt_input_height</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Input_Multiline" parent="GymTrack_Input">
+        <item name="android:minHeight">104dp</item>
+        <item name="android:gravity">top|start</item>
+    </style>
+
+    <style name="GymTrack_Button_Primary">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/gt_primary_foreground</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/gt_button_primary</item>
+        <item name="android:minHeight">@dimen/gt_button_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Button_Secondary">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/gt_foreground</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/gt_button_secondary</item>
+        <item name="android:minHeight">@dimen/gt_button_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="GymTrack_Button_Danger">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/gt_destructive</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/gt_button_danger</item>
+        <item name="android:minHeight">@dimen/gt_button_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+</resources>

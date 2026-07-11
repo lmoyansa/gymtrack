@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gt_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/layoutEditarRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/gt_screen_padding">
+
+        <TextView
+            style="@style/GymTrack_Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EDITAR RUTINA" />
+
+        <TextView
+            android:id="@+id/tvTituloEditarRutina"
+            style="@style/GymTrack_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:text="Actualiza tu plan" />
+
+        <TextView
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:layout_marginBottom="@dimen/gt_gap_large"
+            android:text="Modifica la información principal de la rutina y guarda los cambios." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gt_background_card"
+            android:orientation="vertical"
+            android:padding="@dimen/gt_card_padding">
+
+            <TextView
+                style="@style/GymTrack_SectionTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_large"
+                android:text="Información de la rutina" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_small"
+                android:text="Nombre" />
+
+            <EditText
+                android:id="@+id/etNombreRutinaEditar"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_medium"
+                android:hint="Nombre de la rutina"
+                android:inputType="textCapSentences"
+                android:singleLine="true" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_small"
+                android:text="Objetivo" />
+
+            <EditText
+                android:id="@+id/etObjetivoRutinaEditar"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_medium"
+                android:hint="Ej. Hipertrofia"
+                android:inputType="textCapSentences"
+                android:singleLine="true" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gt_gap_small"
+                android:text="Descripción" />
+
+            <EditText
+                android:id="@+id/etDescripcionRutinaEditar"
+                style="@style/GymTrack_Input_Multiline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:hint="Descripción de la rutina"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="4" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnGuardarCambiosRutina"
+            style="@style/GymTrack_Button_Primary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:text="Guardar cambios" />
+
+        <Button
+            android:id="@+id/btnCancelarEditarRutina"
+            style="@style/GymTrack_Button_Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:text="Cancelar" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_gap_large" />
+
+    </LinearLayout>
+
+</ScrollView>

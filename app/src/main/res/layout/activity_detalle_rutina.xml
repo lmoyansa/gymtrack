@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gt_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/layoutDetalleRutina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/gt_screen_padding">
+
+        <TextView
+            android:id="@+id/tvTituloDetalleRutina"
+            style="@style/GymTrack_Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DETALLE DE RUTINA" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:background="@drawable/gt_background_card"
+            android:orientation="vertical"
+            android:padding="@dimen/gt_card_padding">
+
+            <TextView
+                android:id="@+id/tvNombreRutinaDetalle"
+                style="@style/GymTrack_Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre de la rutina" />
+
+            <TextView
+                android:id="@+id/tvObjetivoRutinaDetalle"
+                style="@style/GymTrack_Overline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_medium"
+                android:text="OBJETIVO" />
+
+            <TextView
+                android:id="@+id/tvDescripcionRutinaDetalle"
+                style="@style/GymTrack_Muted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_medium"
+                android:text="Descripción de la rutina" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/GymTrack_SectionTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ejercicios" />
+
+            <TextView
+                style="@style/GymTrack_Overline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PLANIFICACIÓN" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvMensajeSinEjercicios"
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:background="@drawable/gt_background_card"
+            android:gravity="center"
+            android:padding="@dimen/gt_card_padding"
+            android:text="Esta rutina todavía no tiene ejercicios.\nAñade el primero para comenzar."
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:id="@+id/contenedorEjercicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/btnAnadirEjercicio"
+            style="@style/GymTrack_Button_Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:text="Añadir ejercicio" />
+
+        <Button
+            android:id="@+id/btnEmpezarEntrenamiento"
+            style="@style/GymTrack_Button_Primary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:text="Empezar entrenamiento" />
+
+        <TextView
+            style="@style/GymTrack_SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Gestión de la rutina" />
+
+        <TextView
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:text="Modifica la información o elimina la rutina." />
+
+        <Button
+            android:id="@+id/btnEditarRutina"
+            style="@style/GymTrack_Button_Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:text="Editar rutina" />
+
+        <Button
+            android:id="@+id/btnEliminarRutina"
+            style="@style/GymTrack_Button_Danger"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:text="Eliminar rutina" />
+
+        <Button
+            android:id="@+id/btnVolverListadoRutinas"
+            style="@style/GymTrack_Button_Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:text="Volver a mis rutinas" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_gap_large" />
+
+    </LinearLayout>
+
+</ScrollView>
