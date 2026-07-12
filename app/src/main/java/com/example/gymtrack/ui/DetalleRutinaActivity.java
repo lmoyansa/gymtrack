@@ -42,7 +42,9 @@ public class DetalleRutinaActivity extends Activity {
 
     private RutinaRepository rutinaRepository;
     private EjercicioRepository ejercicioRepository;
-    private RutinaEjercicioRepository rutinaEjercicioRepository;
+
+    private RutinaEjercicioRepository
+            rutinaEjercicioRepository;
 
     private Rutina rutinaActual;
     private int idRutina;
@@ -50,26 +52,68 @@ public class DetalleRutinaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalle_rutina);
 
-        tvNombreRutinaDetalle = findViewById(R.id.tvNombreRutinaDetalle);
-        tvObjetivoRutinaDetalle = findViewById(R.id.tvObjetivoRutinaDetalle);
-        tvDescripcionRutinaDetalle = findViewById(R.id.tvDescripcionRutinaDetalle);
-        tvMensajeSinEjercicios = findViewById(R.id.tvMensajeSinEjercicios);
+        setContentView(
+                R.layout.activity_detalle_rutina
+        );
 
-        contenedorEjercicios = findViewById(R.id.contenedorEjercicios);
+        tvNombreRutinaDetalle =
+                findViewById(
+                        R.id.tvNombreRutinaDetalle
+                );
 
-        btnEditarRutina = findViewById(R.id.btnEditarRutina);
-        btnEliminarRutina = findViewById(R.id.btnEliminarRutina);
-        btnAnadirEjercicio = findViewById(R.id.btnAnadirEjercicio);
-        btnEmpezarEntrenamiento = findViewById(R.id.btnEmpezarEntrenamiento);
-        btnVolverListadoRutinas = findViewById(R.id.btnVolverListadoRutinas);
+        tvObjetivoRutinaDetalle =
+                findViewById(
+                        R.id.tvObjetivoRutinaDetalle
+                );
 
-        rutinaRepository = RutinaRepository.getInstance();
-        ejercicioRepository = EjercicioRepository.getInstance();
-        rutinaEjercicioRepository = RutinaEjercicioRepository.getInstance();
+        tvDescripcionRutinaDetalle =
+                findViewById(
+                        R.id.tvDescripcionRutinaDetalle
+                );
 
-        idRutina = getIntent().getIntExtra(EXTRA_ID_RUTINA, -1);
+        tvMensajeSinEjercicios =
+                findViewById(
+                        R.id.tvMensajeSinEjercicios
+                );
+
+        contenedorEjercicios =
+                findViewById(
+                        R.id.contenedorEjercicios
+                );
+
+        btnEditarRutina =
+                findViewById(R.id.btnEditarRutina);
+
+        btnEliminarRutina =
+                findViewById(R.id.btnEliminarRutina);
+
+        btnAnadirEjercicio =
+                findViewById(R.id.btnAnadirEjercicio);
+
+        btnEmpezarEntrenamiento =
+                findViewById(
+                        R.id.btnEmpezarEntrenamiento
+                );
+
+        btnVolverListadoRutinas =
+                findViewById(
+                        R.id.btnVolverListadoRutinas
+                );
+
+        rutinaRepository =
+                RutinaRepository.getInstance();
+
+        ejercicioRepository =
+                EjercicioRepository.getInstance();
+
+        rutinaEjercicioRepository =
+                RutinaEjercicioRepository.getInstance();
+
+        idRutina = getIntent().getIntExtra(
+                EXTRA_ID_RUTINA,
+                -1
+        );
 
         if (idRutina == -1) {
             Toast.makeText(
@@ -83,24 +127,36 @@ public class DetalleRutinaActivity extends Activity {
         }
 
         btnEditarRutina.setOnClickListener(v -> {
-            Intent intent = new Intent(this, EditarRutinaActivity.class);
+            Intent intent =
+                    new Intent(
+                            this,
+                            EditarRutinaActivity.class
+                    );
+
             intent.putExtra(
                     EditarRutinaActivity.EXTRA_ID_RUTINA,
                     idRutina
             );
+
             startActivity(intent);
         });
 
         btnEliminarRutina.setOnClickListener(v ->
-                mostrarConfirmacionEliminar()
+                mostrarConfirmacionEliminarRutina()
         );
 
         btnAnadirEjercicio.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AnadirEjercicioActivity.class);
+            Intent intent =
+                    new Intent(
+                            this,
+                            AnadirEjercicioActivity.class
+                    );
+
             intent.putExtra(
                     AnadirEjercicioActivity.EXTRA_ID_RUTINA,
                     idRutina
             );
+
             startActivity(intent);
         });
 
@@ -112,21 +168,27 @@ public class DetalleRutinaActivity extends Activity {
                 ).show()
         );
 
-        btnVolverListadoRutinas.setOnClickListener(v -> finish());
+        btnVolverListadoRutinas.setOnClickListener(
+                v -> finish()
+        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (rutinaRepository != null && idRutina != -1) {
+        if (rutinaRepository != null
+                && idRutina != -1) {
+
             cargarRutina();
             cargarEjercicios();
         }
     }
 
     private void cargarRutina() {
-        rutinaActual = rutinaRepository.obtenerRutinaPorId(idRutina);
+        rutinaActual =
+                rutinaRepository
+                        .obtenerRutinaPorId(idRutina);
 
         if (rutinaActual == null) {
             Toast.makeText(
@@ -144,27 +206,45 @@ public class DetalleRutinaActivity extends Activity {
 
     private void mostrarDatosRutina() {
         tvNombreRutinaDetalle.setText(
-                rutinaActual.getNombre().toUpperCase(Locale.getDefault())
+                rutinaActual
+                        .getNombre()
+                        .toUpperCase(
+                                Locale.getDefault()
+                        )
         );
 
-        String objetivo = rutinaActual.getObjetivo();
+        String objetivo =
+                rutinaActual.getObjetivo();
 
-        if (objetivo == null || objetivo.trim().isEmpty()) {
-            tvObjetivoRutinaDetalle.setText("OBJETIVO NO ESPECIFICADO");
+        if (objetivo == null
+                || objetivo.trim().isEmpty()) {
+
+            tvObjetivoRutinaDetalle.setText(
+                    "OBJETIVO NO ESPECIFICADO"
+            );
+
         } else {
             tvObjetivoRutinaDetalle.setText(
-                    objetivo.toUpperCase(Locale.getDefault())
+                    objetivo.toUpperCase(
+                            Locale.getDefault()
+                    )
             );
         }
 
-        String descripcion = rutinaActual.getDescripcion();
+        String descripcion =
+                rutinaActual.getDescripcion();
 
-        if (descripcion == null || descripcion.trim().isEmpty()) {
+        if (descripcion == null
+                || descripcion.trim().isEmpty()) {
+
             tvDescripcionRutinaDetalle.setText(
                     "No se ha añadido una descripción para esta rutina."
             );
+
         } else {
-            tvDescripcionRutinaDetalle.setText(descripcion);
+            tvDescripcionRutinaDetalle.setText(
+                    descripcion
+            );
         }
     }
 
@@ -172,29 +252,41 @@ public class DetalleRutinaActivity extends Activity {
         contenedorEjercicios.removeAllViews();
 
         List<RutinaEjercicio> relaciones =
-                rutinaEjercicioRepository.obtenerPorRutina(idRutina);
+                rutinaEjercicioRepository
+                        .obtenerPorRutina(idRutina);
 
         if (relaciones.isEmpty()) {
-            tvMensajeSinEjercicios.setVisibility(View.VISIBLE);
+            tvMensajeSinEjercicios.setVisibility(
+                    View.VISIBLE
+            );
+
             return;
         }
 
-        tvMensajeSinEjercicios.setVisibility(View.GONE);
+        tvMensajeSinEjercicios.setVisibility(
+                View.GONE
+        );
 
         for (RutinaEjercicio relacion : relaciones) {
             Ejercicio ejercicio =
-                    ejercicioRepository.obtenerEjercicioPorId(
-                            relacion.getIdEjercicio()
-                    );
+                    ejercicioRepository
+                            .obtenerEjercicioPorId(
+                                    relacion.getIdEjercicio()
+                            );
 
             if (ejercicio == null) {
                 continue;
             }
 
             View tarjetaEjercicio =
-                    crearTarjetaEjercicio(ejercicio, relacion);
+                    crearTarjetaEjercicio(
+                            ejercicio,
+                            relacion
+                    );
 
-            contenedorEjercicios.addView(tarjetaEjercicio);
+            contenedorEjercicios.addView(
+                    tarjetaEjercicio
+            );
         }
     }
 
@@ -202,10 +294,17 @@ public class DetalleRutinaActivity extends Activity {
             Ejercicio ejercicio,
             RutinaEjercicio relacion
     ) {
-        LinearLayout tarjeta = new LinearLayout(this);
+        LinearLayout tarjeta =
+                new LinearLayout(this);
 
-        tarjeta.setOrientation(LinearLayout.VERTICAL);
-        tarjeta.setBackgroundResource(R.drawable.gt_background_card);
+        tarjeta.setOrientation(
+                LinearLayout.VERTICAL
+        );
+
+        tarjeta.setBackgroundResource(
+                R.drawable.gt_background_card
+        );
+
         tarjeta.setPadding(
                 dpToPx(20),
                 dpToPx(18),
@@ -226,34 +325,62 @@ public class DetalleRutinaActivity extends Activity {
                 dpToPx(16)
         );
 
-        tarjeta.setLayoutParams(parametrosTarjeta);
-
-        TextView tvOrden = new TextView(this);
-
-        String textoOrden = String.format(
-                Locale.getDefault(),
-                "EJERCICIO %02d",
-                relacion.getOrden()
+        tarjeta.setLayoutParams(
+                parametrosTarjeta
         );
 
+        TextView tvOrden =
+                new TextView(this);
+
+        String textoOrden =
+                String.format(
+                        Locale.getDefault(),
+                        "EJERCICIO %02d",
+                        relacion.getOrden()
+                );
+
         tvOrden.setText(textoOrden);
-        tvOrden.setTextColor(getColor(R.color.gt_primary));
-        tvOrden.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        tvOrden.setTypeface(Typeface.DEFAULT_BOLD);
+
+        tvOrden.setTextColor(
+                getColor(R.color.gt_primary)
+        );
+
+        tvOrden.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                12
+        );
+
+        tvOrden.setTypeface(
+                Typeface.DEFAULT_BOLD
+        );
+
         tvOrden.setLetterSpacing(0.08f);
 
         tarjeta.addView(tvOrden);
 
-        TextView tvNombre = new TextView(this);
-        tvNombre.setText(ejercicio.getNombre());
-        tvNombre.setTextColor(getColor(R.color.gt_foreground));
-        tvNombre.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        TextView tvNombre =
+                new TextView(this);
+
+        tvNombre.setText(
+                ejercicio.getNombre()
+        );
+
+        tvNombre.setTextColor(
+                getColor(R.color.gt_foreground)
+        );
+
+        tvNombre.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                22
+        );
+
         tvNombre.setTypeface(
                 Typeface.create(
                         "sans-serif-condensed",
                         Typeface.BOLD
                 )
         );
+
         tvNombre.setLetterSpacing(0.02f);
 
         LinearLayout.LayoutParams parametrosNombre =
@@ -269,19 +396,37 @@ public class DetalleRutinaActivity extends Activity {
                 0
         );
 
-        tvNombre.setLayoutParams(parametrosNombre);
+        tvNombre.setLayoutParams(
+                parametrosNombre
+        );
+
         tarjeta.addView(tvNombre);
 
-        String grupoMuscular = ejercicio.getGrupoMuscular();
+        String grupoMuscular =
+                ejercicio.getGrupoMuscular();
 
-        if (grupoMuscular == null || grupoMuscular.trim().isEmpty()) {
-            grupoMuscular = "Grupo muscular no especificado";
+        if (grupoMuscular == null
+                || grupoMuscular.trim().isEmpty()) {
+
+            grupoMuscular =
+                    "Grupo muscular no especificado";
         }
 
-        TextView tvGrupoMuscular = new TextView(this);
-        tvGrupoMuscular.setText(grupoMuscular);
-        tvGrupoMuscular.setTextColor(getColor(R.color.gt_muted));
-        tvGrupoMuscular.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        TextView tvGrupoMuscular =
+                new TextView(this);
+
+        tvGrupoMuscular.setText(
+                grupoMuscular
+        );
+
+        tvGrupoMuscular.setTextColor(
+                getColor(R.color.gt_muted)
+        );
+
+        tvGrupoMuscular.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                14
+        );
 
         LinearLayout.LayoutParams parametrosGrupo =
                 new LinearLayout.LayoutParams(
@@ -296,15 +441,23 @@ public class DetalleRutinaActivity extends Activity {
                 0
         );
 
-        tvGrupoMuscular.setLayoutParams(parametrosGrupo);
+        tvGrupoMuscular.setLayoutParams(
+                parametrosGrupo
+        );
+
         tarjeta.addView(tvGrupoMuscular);
 
-        LinearLayout panelPlanificacion = new LinearLayout(this);
+        LinearLayout panelPlanificacion =
+                new LinearLayout(this);
 
-        panelPlanificacion.setOrientation(LinearLayout.VERTICAL);
+        panelPlanificacion.setOrientation(
+                LinearLayout.VERTICAL
+        );
+
         panelPlanificacion.setBackgroundResource(
                 R.drawable.gt_button_secondary
         );
+
         panelPlanificacion.setPadding(
                 dpToPx(16),
                 dpToPx(14),
@@ -325,9 +478,12 @@ public class DetalleRutinaActivity extends Activity {
                 0
         );
 
-        panelPlanificacion.setLayoutParams(parametrosPanel);
+        panelPlanificacion.setLayoutParams(
+                parametrosPanel
+        );
 
-        TextView tvPlanificacion = new TextView(this);
+        TextView tvPlanificacion =
+                new TextView(this);
 
         String textoPlanificacion =
                 relacion.getSeriesPlanificadas()
@@ -335,37 +491,63 @@ public class DetalleRutinaActivity extends Activity {
                         + relacion.getRepeticionesPlanificadas()
                         + " repeticiones"
                         + "\n"
-                        + formatearPeso(relacion.getPesoObjetivo())
+                        + formatearPeso(
+                        relacion.getPesoObjetivo()
+                )
                         + " kg objetivo  ·  "
                         + relacion.getDescansoSegundos()
                         + " s descanso";
 
-        tvPlanificacion.setText(textoPlanificacion);
-        tvPlanificacion.setTextColor(getColor(R.color.gt_foreground));
+        tvPlanificacion.setText(
+                textoPlanificacion
+        );
+
+        tvPlanificacion.setTextColor(
+                getColor(R.color.gt_foreground)
+        );
+
         tvPlanificacion.setTextSize(
                 TypedValue.COMPLEX_UNIT_SP,
                 15
         );
+
         tvPlanificacion.setLineSpacing(
                 dpToPx(4),
                 1.0f
         );
 
-        panelPlanificacion.addView(tvPlanificacion);
-        tarjeta.addView(panelPlanificacion);
+        panelPlanificacion.addView(
+                tvPlanificacion
+        );
 
-        String descripcion = ejercicio.getDescripcion();
+        tarjeta.addView(
+                panelPlanificacion
+        );
 
-        if (descripcion != null && !descripcion.trim().isEmpty()) {
-            TextView tvDescripcion = new TextView(this);
-            tvDescripcion.setText(descripcion);
-            tvDescripcion.setTextColor(getColor(R.color.gt_muted));
+        String descripcion =
+                ejercicio.getDescripcion();
+
+        if (descripcion != null
+                && !descripcion.trim().isEmpty()) {
+
+            TextView tvDescripcion =
+                    new TextView(this);
+
+            tvDescripcion.setText(
+                    descripcion
+            );
+
+            tvDescripcion.setTextColor(
+                    getColor(R.color.gt_muted)
+            );
+
             tvDescripcion.setTextSize(
                     TypedValue.COMPLEX_UNIT_SP,
                     14
             );
 
-            LinearLayout.LayoutParams parametrosDescripcion =
+            LinearLayout.LayoutParams
+                    parametrosDescripcion =
                     new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -378,9 +560,133 @@ public class DetalleRutinaActivity extends Activity {
                     0
             );
 
-            tvDescripcion.setLayoutParams(parametrosDescripcion);
+            tvDescripcion.setLayoutParams(
+                    parametrosDescripcion
+            );
+
             tarjeta.addView(tvDescripcion);
         }
+
+        Button btnEditarEjercicio =
+                new Button(this);
+
+        btnEditarEjercicio.setText(
+                "Editar ejercicio"
+        );
+
+        btnEditarEjercicio.setTextColor(
+                getColor(R.color.gt_foreground)
+        );
+
+        btnEditarEjercicio.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                14
+        );
+
+        btnEditarEjercicio.setTypeface(
+                Typeface.DEFAULT_BOLD
+        );
+
+        btnEditarEjercicio.setBackgroundResource(
+                R.drawable.gt_button_secondary
+        );
+
+        btnEditarEjercicio.setStateListAnimator(null);
+        btnEditarEjercicio.setMinHeight(dpToPx(52));
+
+        LinearLayout.LayoutParams parametrosEditar =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        dpToPx(52)
+                );
+
+        parametrosEditar.setMargins(
+                0,
+                dpToPx(16),
+                0,
+                0
+        );
+
+        btnEditarEjercicio.setLayoutParams(
+                parametrosEditar
+        );
+
+        btnEditarEjercicio.setOnClickListener(v -> {
+            Intent intent =
+                    new Intent(
+                            this,
+                            EditarEjercicioActivity.class
+                    );
+
+            intent.putExtra(
+                    EditarEjercicioActivity
+                            .EXTRA_ID_EJERCICIO,
+                    ejercicio.getIdEjercicio()
+            );
+
+            intent.putExtra(
+                    EditarEjercicioActivity
+                            .EXTRA_ID_RUTINA_EJERCICIO,
+                    relacion.getIdRutinaEjercicio()
+            );
+
+            startActivity(intent);
+        });
+
+        tarjeta.addView(btnEditarEjercicio);
+
+        Button btnEliminarEjercicio =
+                new Button(this);
+
+        btnEliminarEjercicio.setText(
+                "Eliminar ejercicio"
+        );
+
+        btnEliminarEjercicio.setTextColor(
+                getColor(R.color.gt_destructive)
+        );
+
+        btnEliminarEjercicio.setTextSize(
+                TypedValue.COMPLEX_UNIT_SP,
+                14
+        );
+
+        btnEliminarEjercicio.setTypeface(
+                Typeface.DEFAULT_BOLD
+        );
+
+        btnEliminarEjercicio.setBackgroundResource(
+                R.drawable.gt_button_danger
+        );
+
+        btnEliminarEjercicio.setStateListAnimator(null);
+        btnEliminarEjercicio.setMinHeight(dpToPx(52));
+
+        LinearLayout.LayoutParams parametrosEliminar =
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        dpToPx(52)
+                );
+
+        parametrosEliminar.setMargins(
+                0,
+                dpToPx(12),
+                0,
+                0
+        );
+
+        btnEliminarEjercicio.setLayoutParams(
+                parametrosEliminar
+        );
+
+        btnEliminarEjercicio.setOnClickListener(v ->
+                mostrarConfirmacionEliminarEjercicio(
+                        ejercicio,
+                        relacion
+                )
+        );
+
+        tarjeta.addView(btnEliminarEjercicio);
 
         return tarjeta;
     }
@@ -397,7 +703,67 @@ public class DetalleRutinaActivity extends Activity {
         );
     }
 
-    private void mostrarConfirmacionEliminar() {
+    private void mostrarConfirmacionEliminarEjercicio(
+            Ejercicio ejercicio,
+            RutinaEjercicio relacion
+    ) {
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar ejercicio")
+                .setMessage(
+                        "¿Seguro que quieres eliminar \""
+                                + ejercicio.getNombre()
+                                + "\" de esta rutina?"
+                )
+                .setPositiveButton(
+                        "Eliminar",
+                        (dialog, which) ->
+                                eliminarEjercicio(
+                                        ejercicio,
+                                        relacion
+                                )
+                )
+                .setNegativeButton(
+                        "Cancelar",
+                        null
+                )
+                .show();
+    }
+
+    private void eliminarEjercicio(
+            Ejercicio ejercicio,
+            RutinaEjercicio relacion
+    ) {
+        boolean relacionEliminada =
+                rutinaEjercicioRepository
+                        .eliminarRutinaEjercicio(
+                                relacion
+                                        .getIdRutinaEjercicio()
+                        );
+
+        if (!relacionEliminada) {
+            Toast.makeText(
+                    this,
+                    "No se pudo eliminar el ejercicio",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        ejercicioRepository.eliminarEjercicio(
+                ejercicio.getIdEjercicio()
+        );
+
+        cargarEjercicios();
+
+        Toast.makeText(
+                this,
+                "Ejercicio eliminado correctamente",
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+
+    private void mostrarConfirmacionEliminarRutina() {
         if (rutinaActual == null) {
             return;
         }
@@ -411,15 +777,20 @@ public class DetalleRutinaActivity extends Activity {
                 )
                 .setPositiveButton(
                         "Eliminar",
-                        (dialog, which) -> eliminarRutina()
+                        (dialog, which) ->
+                                eliminarRutina()
                 )
-                .setNegativeButton("Cancelar", null)
+                .setNegativeButton(
+                        "Cancelar",
+                        null
+                )
                 .show();
     }
 
     private void eliminarRutina() {
         boolean eliminada =
-                rutinaRepository.eliminarRutina(idRutina);
+                rutinaRepository
+                        .eliminarRutina(idRutina);
 
         if (eliminada) {
             Toast.makeText(
@@ -429,6 +800,7 @@ public class DetalleRutinaActivity extends Activity {
             ).show();
 
             finish();
+
         } else {
             Toast.makeText(
                     this,
@@ -440,7 +812,10 @@ public class DetalleRutinaActivity extends Activity {
 
     private int dpToPx(int dp) {
         return Math.round(
-                dp * getResources().getDisplayMetrics().density
+                dp
+                        * getResources()
+                        .getDisplayMetrics()
+                        .density
         );
     }
 }

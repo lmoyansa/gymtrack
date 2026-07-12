@@ -56,4 +56,37 @@ public class EjercicioRepository {
     public List<Ejercicio> obtenerEjercicios() {
         return ejercicios;
     }
+
+    public boolean editarEjercicio(
+            int idEjercicio,
+            String nombre,
+            String grupoMuscular,
+            String descripcion
+    ) {
+        Ejercicio ejercicio =
+                obtenerEjercicioPorId(idEjercicio);
+
+        if (ejercicio == null) {
+            return false;
+        }
+
+        ejercicio.setNombre(nombre);
+        ejercicio.setGrupoMuscular(grupoMuscular);
+        ejercicio.setDescripcion(descripcion);
+
+        return true;
+    }
+
+    public boolean eliminarEjercicio(int idEjercicio) {
+        for (int i = 0; i < ejercicios.size(); i++) {
+            Ejercicio ejercicio = ejercicios.get(i);
+
+            if (ejercicio.getIdEjercicio() == idEjercicio) {
+                ejercicios.remove(i);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -52,7 +52,23 @@ public class RutinaEjercicioRepository {
         return rutinaEjercicio;
     }
 
-    public List<RutinaEjercicio> obtenerPorRutina(int idRutina) {
+    public RutinaEjercicio obtenerPorId(
+            int idRutinaEjercicio
+    ) {
+        for (RutinaEjercicio rutinaEjercicio : rutinaEjercicios) {
+            if (rutinaEjercicio.getIdRutinaEjercicio()
+                    == idRutinaEjercicio) {
+
+                return rutinaEjercicio;
+            }
+        }
+
+        return null;
+    }
+
+    public List<RutinaEjercicio> obtenerPorRutina(
+            int idRutina
+    ) {
         List<RutinaEjercicio> resultado = new ArrayList<>();
 
         for (RutinaEjercicio rutinaEjercicio : rutinaEjercicios) {
@@ -62,5 +78,65 @@ public class RutinaEjercicioRepository {
         }
 
         return resultado;
+    }
+
+    public boolean editarRutinaEjercicio(
+            int idRutinaEjercicio,
+            int seriesPlanificadas,
+            int repeticionesPlanificadas,
+            double pesoObjetivo,
+            int descansoSegundos
+    ) {
+        RutinaEjercicio rutinaEjercicio =
+                obtenerPorId(idRutinaEjercicio);
+
+        if (rutinaEjercicio == null) {
+            return false;
+        }
+
+        rutinaEjercicio.setSeriesPlanificadas(
+                seriesPlanificadas
+        );
+
+        rutinaEjercicio.setRepeticionesPlanificadas(
+                repeticionesPlanificadas
+        );
+
+        rutinaEjercicio.setPesoObjetivo(pesoObjetivo);
+        rutinaEjercicio.setDescansoSegundos(descansoSegundos);
+
+        return true;
+    }
+
+    public boolean eliminarRutinaEjercicio(
+            int idRutinaEjercicio
+    ) {
+        for (int i = 0; i < rutinaEjercicios.size(); i++) {
+            RutinaEjercicio rutinaEjercicio =
+                    rutinaEjercicios.get(i);
+
+            if (rutinaEjercicio.getIdRutinaEjercicio()
+                    == idRutinaEjercicio) {
+
+                int idRutina =
+                        rutinaEjercicio.getIdRutina();
+
+                rutinaEjercicios.remove(i);
+                reordenarEjercicios(idRutina);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void reordenarEjercicios(int idRutina) {
+        List<RutinaEjercicio> ejerciciosRutina =
+                obtenerPorRutina(idRutina);
+
+        for (int i = 0; i < ejerciciosRutina.size(); i++) {
+            ejerciciosRutina.get(i).setOrden(i + 1);
+        }
     }
 }
