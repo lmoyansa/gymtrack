@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.gymtrack.R;
 
@@ -53,13 +52,15 @@ public class MainActivity extends Activity {
             startActivity(intent);
         });
 
-        btnTemporizador.setOnClickListener(v ->
-                Toast.makeText(
-                        this,
-                        "Temporizador pendiente de implementar",
-                        Toast.LENGTH_SHORT
-                ).show()
-        );
+        btnTemporizador.setOnClickListener(v -> {
+            Intent intent =
+                    new Intent(
+                            this,
+                            TemporizadorActivity.class
+                    );
+
+            startActivity(intent);
+        });
     }
 
     private void abrirListadoRutinas() {
