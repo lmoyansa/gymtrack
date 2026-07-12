@@ -37,6 +37,14 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.RegistrarEntrenamientoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.HistorialEntrenamientosActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
 

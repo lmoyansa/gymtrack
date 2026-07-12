@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gt_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/gt_screen_padding">
+
+        <TextView
+            style="@style/GymTrack_Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TU PROGRESO" />
+
+        <TextView
+            style="@style/GymTrack_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:text="Historial" />
+
+        <TextView
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:layout_marginBottom="@dimen/gt_gap_large"
+            android:text="Consulta los entrenamientos registrados y las series completadas." />
+
+        <TextView
+            android:id="@+id/tvHistorialVacio"
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gt_background_card"
+            android:gravity="center"
+            android:padding="@dimen/gt_card_padding"
+            android:text="Todavía no has registrado ningún entrenamiento."
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:id="@+id/contenedorHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/btnVolverInicioHistorial"
+            style="@style/GymTrack_Button_Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_button_height"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:text="Volver al inicio" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_gap_large" />
+
+    </LinearLayout>
+
+</ScrollView>

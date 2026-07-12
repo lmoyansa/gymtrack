@@ -18,28 +18,57 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        btnMisRutinas = findViewById(R.id.btnMisRutinas);
-        btnIniciarEntrenamiento = findViewById(R.id.btnIniciarEntrenamiento);
-        btnHistorial = findViewById(R.id.btnHistorial);
-        btnTemporizador = findViewById(R.id.btnTemporizador);
+        btnMisRutinas =
+                findViewById(R.id.btnMisRutinas);
 
-        btnMisRutinas.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RutinasActivity.class);
+        btnIniciarEntrenamiento =
+                findViewById(
+                        R.id.btnIniciarEntrenamiento
+                );
+
+        btnHistorial =
+                findViewById(R.id.btnHistorial);
+
+        btnTemporizador =
+                findViewById(R.id.btnTemporizador);
+
+        btnMisRutinas.setOnClickListener(v ->
+                abrirListadoRutinas()
+        );
+
+        btnIniciarEntrenamiento.setOnClickListener(v ->
+                abrirListadoRutinas()
+        );
+
+        btnHistorial.setOnClickListener(v -> {
+            Intent intent =
+                    new Intent(
+                            this,
+                            HistorialEntrenamientosActivity.class
+                    );
+
             startActivity(intent);
         });
 
-        btnIniciarEntrenamiento.setOnClickListener(v ->
-                Toast.makeText(this, "Registro de entrenamiento pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
-        btnHistorial.setOnClickListener(v ->
-                Toast.makeText(this, "Historial pendiente de implementar", Toast.LENGTH_SHORT).show()
-        );
-
         btnTemporizador.setOnClickListener(v ->
-                Toast.makeText(this, "Temporizador pendiente de implementar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                        this,
+                        "Temporizador pendiente de implementar",
+                        Toast.LENGTH_SHORT
+                ).show()
         );
+    }
+
+    private void abrirListadoRutinas() {
+        Intent intent =
+                new Intent(
+                        this,
+                        RutinasActivity.class
+                );
+
+        startActivity(intent);
     }
 }

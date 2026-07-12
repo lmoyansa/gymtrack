@@ -161,11 +161,7 @@ public class DetalleRutinaActivity extends Activity {
         });
 
         btnEmpezarEntrenamiento.setOnClickListener(v ->
-                Toast.makeText(
-                        this,
-                        "Registro de entrenamiento pendiente de implementar",
-                        Toast.LENGTH_SHORT
-                ).show()
+                empezarEntrenamiento()
         );
 
         btnVolverListadoRutinas.setOnClickListener(
@@ -288,6 +284,35 @@ public class DetalleRutinaActivity extends Activity {
                     tarjetaEjercicio
             );
         }
+    }
+
+    private void empezarEntrenamiento() {
+        List<RutinaEjercicio> relaciones =
+                rutinaEjercicioRepository
+                        .obtenerPorRutina(idRutina);
+
+        if (relaciones.isEmpty()) {
+            Toast.makeText(
+                    this,
+                    "Añade al menos un ejercicio antes de empezar",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        Intent intent =
+                new Intent(
+                        this,
+                        RegistrarEntrenamientoActivity.class
+                );
+
+        intent.putExtra(
+                RegistrarEntrenamientoActivity.EXTRA_ID_RUTINA,
+                idRutina
+        );
+
+        startActivity(intent);
     }
 
     private View crearTarjetaEjercicio(
