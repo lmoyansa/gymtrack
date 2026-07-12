@@ -1,25 +1,32 @@
 package com.example.gymtrack.repository;
 
+import com.example.gymtrack.data.GymTrackDatabase;
+import com.example.gymtrack.data.dao.RutinaEjercicioDao;
 import com.example.gymtrack.model.RutinaEjercicio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RutinaEjercicioRepository {
 
     private static RutinaEjercicioRepository instance;
 
-    private final List<RutinaEjercicio> rutinaEjercicios;
-    private int siguienteId;
+    private final RutinaEjercicioDao
+            rutinaEjercicioDao;
 
     private RutinaEjercicioRepository() {
-        rutinaEjercicios = new ArrayList<>();
-        siguienteId = 1;
+        GymTrackDatabase database =
+                GymTrackDatabase.obtenerInstancia();
+
+        rutinaEjercicioDao =
+                database.rutinaEjercicioDao();
     }
 
-    public static RutinaEjercicioRepository getInstance() {
+    public static RutinaEjercicioRepository
+    getInstance() {
+
         if (instance == null) {
-            instance = new RutinaEjercicioRepository();
+            instance =
+                    new RutinaEjercicioRepository();
         }
 
         return instance;
@@ -33,21 +40,30 @@ public class RutinaEjercicioRepository {
             double pesoObjetivo,
             int descansoSegundos
     ) {
-        int orden = obtenerPorRutina(idRutina).size() + 1;
+        int orden =
+                obtenerPorRutina(idRutina)
+                        .size() + 1;
 
-        RutinaEjercicio rutinaEjercicio = new RutinaEjercicio(
-                siguienteId,
-                idRutina,
-                idEjercicio,
-                orden,
-                seriesPlanificadas,
-                repeticionesPlanificadas,
-                pesoObjetivo,
-                descansoSegundos
+        RutinaEjercicio rutinaEjercicio =
+                new RutinaEjercicio(
+                        0,
+                        idRutina,
+                        idEjercicio,
+                        orden,
+                        seriesPlanificadas,
+                        repeticionesPlanificadas,
+                        pesoObjetivo,
+                        descansoSegundos
+                );
+
+        long idGenerado =
+                rutinaEjercicioDao.insertar(
+                        rutinaEjercicio
+                );
+
+        rutinaEjercicio.setIdRutinaEjercicio(
+                (int) idGenerado
         );
-
-        rutinaEjercicios.add(rutinaEjercicio);
-        siguienteId++;
 
         return rutinaEjercicio;
     }
@@ -55,29 +71,17 @@ public class RutinaEjercicioRepository {
     public RutinaEjercicio obtenerPorId(
             int idRutinaEjercicio
     ) {
-        for (RutinaEjercicio rutinaEjercicio : rutinaEjercicios) {
-            if (rutinaEjercicio.getIdRutinaEjercicio()
-                    == idRutinaEjercicio) {
-
-                return rutinaEjercicio;
-            }
-        }
-
-        return null;
+        return rutinaEjercicioDao.obtenerPorId(
+                idRutinaEjercicio
+        );
     }
 
     public List<RutinaEjercicio> obtenerPorRutina(
             int idRutina
     ) {
-        List<RutinaEjercicio> resultado = new ArrayList<>();
-
-        for (RutinaEjercicio rutinaEjercicio : rutinaEjercicios) {
-            if (rutinaEjercicio.getIdRutina() == idRutina) {
-                resultado.add(rutinaEjercicio);
-            }
-        }
-
-        return resultado;
+        return rutinaEjercicioDao.obtenerPorRutina(
+                idRutina
+        );
     }
 
     public boolean editarRutinaEjercicio(
@@ -88,7 +92,9 @@ public class RutinaEjercicioRepository {
             int descansoSegundos
     ) {
         RutinaEjercicio rutinaEjercicio =
-                obtenerPorId(idRutinaEjercicio);
+                obtenerPorId(
+                        idRutinaEjercicio
+                );
 
         if (rutinaEjercicio == null) {
             return false;
@@ -98,45 +104,82 @@ public class RutinaEjercicioRepository {
                 seriesPlanificadas
         );
 
-        rutinaEjercicio.setRepeticionesPlanificadas(
-                repeticionesPlanificadas
+        rutinaEjercicio
+                .setRepeticionesPlanificadas(
+                        repeticionesPlanificadas
+                );
+
+        rutinaEjercicio.setPesoObjetivo(
+                pesoObjetivo
         );
 
-        rutinaEjercicio.setPesoObjetivo(pesoObjetivo);
-        rutinaEjercicio.setDescansoSegundos(descansoSegundos);
+        rutinaEjercicio.setDescansoSegundos(
+                descansoSegundos
+        );
 
-        return true;
+        int filasActualizadas =
+                rutinaEjercicioDao.actualizar(
+                        rutinaEjercicio
+                );
+
+        return filasActualizadas > 0;
     }
 
     public boolean eliminarRutinaEjercicio(
             int idRutinaEjercicio
     ) {
-        for (int i = 0; i < rutinaEjercicios.size(); i++) {
-            RutinaEjercicio rutinaEjercicio =
-                    rutinaEjercicios.get(i);
+        RutinaEjercicio rutinaEjercicio =
+                obtenerPorId(
+                        idRutinaEjercicio
+                );
 
-            if (rutinaEjercicio.getIdRutinaEjercicio()
-                    == idRutinaEjercicio) {
-
-                int idRutina =
-                        rutinaEjercicio.getIdRutina();
-
-                rutinaEjercicios.remove(i);
-                reordenarEjercicios(idRutina);
-
-                return true;
-            }
+        if (rutinaEjercicio == null) {
+            return false;
         }
 
-        return false;
+        int idRutina =
+                rutinaEjercicio.getIdRutina();
+
+        int filasEliminadas =
+                rutinaEjercicioDao.eliminarPorId(
+                        idRutinaEjercicio
+                );
+
+        if (filasEliminadas <= 0) {
+            return false;
+        }
+
+        reordenarEjercicios(idRutina);
+
+        return true;
     }
 
-    private void reordenarEjercicios(int idRutina) {
+    private void reordenarEjercicios(
+            int idRutina
+    ) {
         List<RutinaEjercicio> ejerciciosRutina =
                 obtenerPorRutina(idRutina);
 
-        for (int i = 0; i < ejerciciosRutina.size(); i++) {
-            ejerciciosRutina.get(i).setOrden(i + 1);
+        for (int i = 0;
+             i < ejerciciosRutina.size();
+             i++) {
+
+            RutinaEjercicio rutinaEjercicio =
+                    ejerciciosRutina.get(i);
+
+            int nuevoOrden = i + 1;
+
+            if (rutinaEjercicio.getOrden()
+                    != nuevoOrden) {
+
+                rutinaEjercicio.setOrden(
+                        nuevoOrden
+                );
+
+                rutinaEjercicioDao.actualizar(
+                        rutinaEjercicio
+                );
+            }
         }
     }
 }

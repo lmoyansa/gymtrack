@@ -1,8 +1,14 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "rutina_ejercicios")
 public class RutinaEjercicio {
 
+    @PrimaryKey(autoGenerate = true)
     private int idRutinaEjercicio;
+
     private int idRutina;
     private int idEjercicio;
     private int orden;
@@ -11,25 +17,44 @@ public class RutinaEjercicio {
     private double pesoObjetivo;
     private int descansoSegundos;
 
-    public RutinaEjercicio(int idRutinaEjercicio, int idRutina, int idEjercicio, int orden,
-                           int seriesPlanificadas, int repeticionesPlanificadas,
-                           double pesoObjetivo, int descansoSegundos) {
-        this.idRutinaEjercicio = idRutinaEjercicio;
+    public RutinaEjercicio(
+            int idRutinaEjercicio,
+            int idRutina,
+            int idEjercicio,
+            int orden,
+            int seriesPlanificadas,
+            int repeticionesPlanificadas,
+            double pesoObjetivo,
+            int descansoSegundos
+    ) {
+        this.idRutinaEjercicio =
+                idRutinaEjercicio;
+
         this.idRutina = idRutina;
         this.idEjercicio = idEjercicio;
         this.orden = orden;
-        this.seriesPlanificadas = seriesPlanificadas;
-        this.repeticionesPlanificadas = repeticionesPlanificadas;
+
+        this.seriesPlanificadas =
+                seriesPlanificadas;
+
+        this.repeticionesPlanificadas =
+                repeticionesPlanificadas;
+
         this.pesoObjetivo = pesoObjetivo;
-        this.descansoSegundos = descansoSegundos;
+
+        this.descansoSegundos =
+                descansoSegundos;
     }
 
     public int getIdRutinaEjercicio() {
         return idRutinaEjercicio;
     }
 
-    public void setIdRutinaEjercicio(int idRutinaEjercicio) {
-        this.idRutinaEjercicio = idRutinaEjercicio;
+    public void setIdRutinaEjercicio(
+            int idRutinaEjercicio
+    ) {
+        this.idRutinaEjercicio =
+                idRutinaEjercicio;
     }
 
     public int getIdRutina() {
@@ -44,7 +69,9 @@ public class RutinaEjercicio {
         return idEjercicio;
     }
 
-    public void setIdEjercicio(int idEjercicio) {
+    public void setIdEjercicio(
+            int idEjercicio
+    ) {
         this.idEjercicio = idEjercicio;
     }
 
@@ -60,23 +87,31 @@ public class RutinaEjercicio {
         return seriesPlanificadas;
     }
 
-    public void setSeriesPlanificadas(int seriesPlanificadas) {
-        this.seriesPlanificadas = seriesPlanificadas;
+    public void setSeriesPlanificadas(
+            int seriesPlanificadas
+    ) {
+        this.seriesPlanificadas =
+                seriesPlanificadas;
     }
 
     public int getRepeticionesPlanificadas() {
         return repeticionesPlanificadas;
     }
 
-    public void setRepeticionesPlanificadas(int repeticionesPlanificadas) {
-        this.repeticionesPlanificadas = repeticionesPlanificadas;
+    public void setRepeticionesPlanificadas(
+            int repeticionesPlanificadas
+    ) {
+        this.repeticionesPlanificadas =
+                repeticionesPlanificadas;
     }
 
     public double getPesoObjetivo() {
         return pesoObjetivo;
     }
 
-    public void setPesoObjetivo(double pesoObjetivo) {
+    public void setPesoObjetivo(
+            double pesoObjetivo
+    ) {
         this.pesoObjetivo = pesoObjetivo;
     }
 
@@ -84,7 +119,10 @@ public class RutinaEjercicio {
         return descansoSegundos;
     }
 
-    public void setDescansoSegundos(int descansoSegundos) {
-        this.descansoSegundos = descansoSegundos;
+    public void setDescansoSegundos(
+            int descansoSegundos
+    ) {
+        this.descansoSegundos =
+                descansoSegundos;
     }
 }

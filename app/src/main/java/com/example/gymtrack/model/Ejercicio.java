@@ -1,13 +1,24 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "ejercicios")
 public class Ejercicio {
 
+    @PrimaryKey(autoGenerate = true)
     private int idEjercicio;
+
     private String nombre;
     private String grupoMuscular;
     private String descripcion;
 
-    public Ejercicio(int idEjercicio, String nombre, String grupoMuscular, String descripcion) {
+    public Ejercicio(
+            int idEjercicio,
+            String nombre,
+            String grupoMuscular,
+            String descripcion
+    ) {
         this.idEjercicio = idEjercicio;
         this.nombre = nombre;
         this.grupoMuscular = grupoMuscular;
@@ -34,7 +45,9 @@ public class Ejercicio {
         return grupoMuscular;
     }
 
-    public void setGrupoMuscular(String grupoMuscular) {
+    public void setGrupoMuscular(
+            String grupoMuscular
+    ) {
         this.grupoMuscular = grupoMuscular;
     }
 
@@ -42,7 +55,9 @@ public class Ejercicio {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void setDescripcion(
+            String descripcion
+    ) {
         this.descripcion = descripcion;
     }
 }

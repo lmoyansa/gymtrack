@@ -1,8 +1,9 @@
 package com.example.gymtrack.repository;
 
+import com.example.gymtrack.data.GymTrackDatabase;
+import com.example.gymtrack.data.dao.EntrenamientoDao;
 import com.example.gymtrack.model.Entrenamiento;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,17 +11,23 @@ public class EntrenamientoRepository {
 
     private static EntrenamientoRepository instance;
 
-    private final List<Entrenamiento> entrenamientos;
-    private int siguienteId;
+    private final EntrenamientoDao
+            entrenamientoDao;
 
     private EntrenamientoRepository() {
-        entrenamientos = new ArrayList<>();
-        siguienteId = 1;
+        GymTrackDatabase database =
+                GymTrackDatabase.obtenerInstancia();
+
+        entrenamientoDao =
+                database.entrenamientoDao();
     }
 
-    public static EntrenamientoRepository getInstance() {
+    public static EntrenamientoRepository
+    getInstance() {
+
         if (instance == null) {
-            instance = new EntrenamientoRepository();
+            instance =
+                    new EntrenamientoRepository();
         }
 
         return instance;
@@ -33,50 +40,48 @@ public class EntrenamientoRepository {
             int duracionMinutos,
             String observaciones
     ) {
-        Entrenamiento entrenamiento = new Entrenamiento(
-                siguienteId,
-                idUsuario,
-                idRutina,
-                fecha,
-                duracionMinutos,
-                observaciones
-        );
+        Entrenamiento entrenamiento =
+                new Entrenamiento(
+                        0,
+                        idUsuario,
+                        idRutina,
+                        fecha,
+                        duracionMinutos,
+                        observaciones
+                );
 
-        entrenamientos.add(entrenamiento);
-        siguienteId++;
+        long idGenerado =
+                entrenamientoDao.insertar(
+                        entrenamiento
+                );
+
+        entrenamiento.setIdEntrenamiento(
+                (int) idGenerado
+        );
 
         return entrenamiento;
     }
 
-    public Entrenamiento obtenerEntrenamientoPorId(
+    public Entrenamiento
+    obtenerEntrenamientoPorId(
             int idEntrenamiento
     ) {
-        for (Entrenamiento entrenamiento : entrenamientos) {
-            if (entrenamiento.getIdEntrenamiento()
-                    == idEntrenamiento) {
-
-                return entrenamiento;
-            }
-        }
-
-        return null;
+        return entrenamientoDao.obtenerPorId(
+                idEntrenamiento
+        );
     }
 
-    public List<Entrenamiento> obtenerEntrenamientos() {
-        return new ArrayList<>(entrenamientos);
+    public List<Entrenamiento>
+    obtenerEntrenamientos() {
+
+        return entrenamientoDao.obtenerTodos();
     }
 
     public List<Entrenamiento> obtenerPorRutina(
             int idRutina
     ) {
-        List<Entrenamiento> resultado = new ArrayList<>();
-
-        for (Entrenamiento entrenamiento : entrenamientos) {
-            if (entrenamiento.getIdRutina() == idRutina) {
-                resultado.add(entrenamiento);
-            }
-        }
-
-        return resultado;
+        return entrenamientoDao.obtenerPorRutina(
+                idRutina
+        );
     }
 }

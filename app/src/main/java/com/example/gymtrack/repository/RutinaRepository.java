@@ -1,61 +1,77 @@
 package com.example.gymtrack.repository;
 
+import com.example.gymtrack.data.GymTrackDatabase;
+import com.example.gymtrack.data.dao.RutinaDao;
 import com.example.gymtrack.model.Rutina;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class RutinaRepository {
 
     private static RutinaRepository instance;
-    private final List<Rutina> rutinas;
-    private int siguienteId;
+
+    private final RutinaDao rutinaDao;
 
     private RutinaRepository() {
-        rutinas = new ArrayList<>();
-        siguienteId = 1;
+        GymTrackDatabase database =
+                GymTrackDatabase.obtenerInstancia();
+
+        rutinaDao = database.rutinaDao();
     }
 
     public static RutinaRepository getInstance() {
         if (instance == null) {
             instance = new RutinaRepository();
         }
+
         return instance;
     }
 
     public List<Rutina> obtenerRutinas() {
-        return rutinas;
+        return rutinaDao.obtenerTodas();
     }
 
-    public Rutina obtenerRutinaPorId(int idRutina) {
-        for (Rutina rutina : rutinas) {
-            if (rutina.getIdRutina() == idRutina) {
-                return rutina;
-            }
-        }
-        return null;
+    public Rutina obtenerRutinaPorId(
+            int idRutina
+    ) {
+        return rutinaDao.obtenerPorId(idRutina);
     }
 
-    public Rutina crearRutina(String nombre, String descripcion, String objetivo) {
-        Rutina nuevaRutina = new Rutina(
-                siguienteId,
-                1,
-                nombre,
-                descripcion,
-                objetivo,
-                new Date(),
-                true
+    public Rutina crearRutina(
+            String nombre,
+            String descripcion,
+            String objetivo
+    ) {
+        Rutina nuevaRutina =
+                new Rutina(
+                        0,
+                        1,
+                        nombre,
+                        descripcion,
+                        objetivo,
+                        new Date(),
+                        true
+                );
+
+        long idGenerado =
+                rutinaDao.insertar(nuevaRutina);
+
+        nuevaRutina.setIdRutina(
+                (int) idGenerado
         );
-
-        rutinas.add(nuevaRutina);
-        siguienteId++;
 
         return nuevaRutina;
     }
 
-    public boolean editarRutina(int idRutina, String nombre, String descripcion, String objetivo) {
-        Rutina rutina = obtenerRutinaPorId(idRutina);
+    public boolean editarRutina(
+            int idRutina,
+            String nombre,
+            String descripcion,
+            String objetivo
+    ) {
+        Rutina rutina =
+                obtenerRutinaPorId(idRutina);
 
         if (rutina == null) {
             return false;
@@ -65,21 +81,32 @@ public class RutinaRepository {
         rutina.setDescripcion(descripcion);
         rutina.setObjetivo(objetivo);
 
-        return true;
+        int filasActualizadas =
+                rutinaDao.actualizar(rutina);
+
+        return filasActualizadas > 0;
     }
 
-    public boolean eliminarRutina(int idRutina) {
-        Rutina rutina = obtenerRutinaPorId(idRutina);
+    public boolean eliminarRutina(
+            int idRutina
+    ) {
+        Rutina rutina =
+                obtenerRutinaPorId(idRutina);
 
         if (rutina == null) {
             return false;
         }
 
-        rutinas.remove(rutina);
-        return true;
+        int filasEliminadas =
+                rutinaDao.eliminarPorId(idRutina);
+
+        return filasEliminadas > 0;
     }
 
-    public boolean validarNombreRutina(String nombre) {
-        return nombre != null && !nombre.trim().isEmpty();
+    public boolean validarNombreRutina(
+            String nombre
+    ) {
+        return nombre != null
+                && !nombre.trim().isEmpty();
     }
 }

@@ -1,10 +1,20 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.gymtrack.data.DateConverter;
+
 import java.util.Date;
 
+@Entity(tableName = "rutinas")
+@TypeConverters(DateConverter.class)
 public class Rutina {
 
+    @PrimaryKey(autoGenerate = true)
     private int idRutina;
+
     private int idUsuario;
     private String nombre;
     private String descripcion;
@@ -12,7 +22,15 @@ public class Rutina {
     private Date fechaCreacion;
     private boolean activa;
 
-    public Rutina(int idRutina, int idUsuario, String nombre, String descripcion, String objetivo, Date fechaCreacion, boolean activa) {
+    public Rutina(
+            int idRutina,
+            int idUsuario,
+            String nombre,
+            String descripcion,
+            String objetivo,
+            Date fechaCreacion,
+            boolean activa
+    ) {
         this.idRutina = idRutina;
         this.idUsuario = idUsuario;
         this.nombre = nombre;
@@ -50,7 +68,9 @@ public class Rutina {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
+    public void setDescripcion(
+            String descripcion
+    ) {
         this.descripcion = descripcion;
     }
 
@@ -66,7 +86,9 @@ public class Rutina {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(
+            Date fechaCreacion
+    ) {
         this.fechaCreacion = fechaCreacion;
     }
 

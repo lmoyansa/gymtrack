@@ -1,22 +1,44 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.gymtrack.data.DateConverter;
+
 import java.util.Date;
 
+@Entity(tableName = "entrenamientos")
+@TypeConverters(DateConverter.class)
 public class Entrenamiento {
 
+    @PrimaryKey(autoGenerate = true)
     private int idEntrenamiento;
+
     private int idUsuario;
     private int idRutina;
     private Date fecha;
     private int duracionMinutos;
     private String observaciones;
 
-    public Entrenamiento(int idEntrenamiento, int idUsuario, int idRutina, Date fecha, int duracionMinutos, String observaciones) {
-        this.idEntrenamiento = idEntrenamiento;
+    public Entrenamiento(
+            int idEntrenamiento,
+            int idUsuario,
+            int idRutina,
+            Date fecha,
+            int duracionMinutos,
+            String observaciones
+    ) {
+        this.idEntrenamiento =
+                idEntrenamiento;
+
         this.idUsuario = idUsuario;
         this.idRutina = idRutina;
         this.fecha = fecha;
-        this.duracionMinutos = duracionMinutos;
+
+        this.duracionMinutos =
+                duracionMinutos;
+
         this.observaciones = observaciones;
     }
 
@@ -24,8 +46,11 @@ public class Entrenamiento {
         return idEntrenamiento;
     }
 
-    public void setIdEntrenamiento(int idEntrenamiento) {
-        this.idEntrenamiento = idEntrenamiento;
+    public void setIdEntrenamiento(
+            int idEntrenamiento
+    ) {
+        this.idEntrenamiento =
+                idEntrenamiento;
     }
 
     public int getIdUsuario() {
@@ -56,15 +81,20 @@ public class Entrenamiento {
         return duracionMinutos;
     }
 
-    public void setDuracionMinutos(int duracionMinutos) {
-        this.duracionMinutos = duracionMinutos;
+    public void setDuracionMinutos(
+            int duracionMinutos
+    ) {
+        this.duracionMinutos =
+                duracionMinutos;
     }
 
     public String getObservaciones() {
         return observaciones;
     }
 
-    public void setObservaciones(String observaciones) {
+    public void setObservaciones(
+            String observaciones
+    ) {
         this.observaciones = observaciones;
     }
 }

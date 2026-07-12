@@ -1,16 +1,32 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.gymtrack.data.DateConverter;
+
 import java.util.Date;
 
+@Entity(tableName = "usuarios")
+@TypeConverters(DateConverter.class)
 public class Usuario {
 
+    @PrimaryKey(autoGenerate = true)
     private int idUsuario;
+
     private String nombre;
     private String email;
     private String passwordHash;
     private Date fechaRegistro;
 
-    public Usuario(int idUsuario, String nombre, String email, String passwordHash, Date fechaRegistro) {
+    public Usuario(
+            int idUsuario,
+            String nombre,
+            String email,
+            String passwordHash,
+            Date fechaRegistro
+    ) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.email = email;
@@ -46,7 +62,9 @@ public class Usuario {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
+    public void setPasswordHash(
+            String passwordHash
+    ) {
         this.passwordHash = passwordHash;
     }
 
@@ -54,7 +72,9 @@ public class Usuario {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(
+            Date fechaRegistro
+    ) {
         this.fechaRegistro = fechaRegistro;
     }
 }

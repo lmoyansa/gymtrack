@@ -1,20 +1,22 @@
 package com.example.gymtrack.repository;
 
+import com.example.gymtrack.data.GymTrackDatabase;
+import com.example.gymtrack.data.dao.EjercicioDao;
 import com.example.gymtrack.model.Ejercicio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EjercicioRepository {
 
     private static EjercicioRepository instance;
 
-    private final List<Ejercicio> ejercicios;
-    private int siguienteId;
+    private final EjercicioDao ejercicioDao;
 
     private EjercicioRepository() {
-        ejercicios = new ArrayList<>();
-        siguienteId = 1;
+        GymTrackDatabase database =
+                GymTrackDatabase.obtenerInstancia();
+
+        ejercicioDao = database.ejercicioDao();
     }
 
     public static EjercicioRepository getInstance() {
@@ -30,31 +32,34 @@ public class EjercicioRepository {
             String grupoMuscular,
             String descripcion
     ) {
-        Ejercicio ejercicio = new Ejercicio(
-                siguienteId,
-                nombre,
-                grupoMuscular,
-                descripcion
-        );
+        Ejercicio ejercicio =
+                new Ejercicio(
+                        0,
+                        nombre,
+                        grupoMuscular,
+                        descripcion
+                );
 
-        ejercicios.add(ejercicio);
-        siguienteId++;
+        long idGenerado =
+                ejercicioDao.insertar(ejercicio);
+
+        ejercicio.setIdEjercicio(
+                (int) idGenerado
+        );
 
         return ejercicio;
     }
 
-    public Ejercicio obtenerEjercicioPorId(int idEjercicio) {
-        for (Ejercicio ejercicio : ejercicios) {
-            if (ejercicio.getIdEjercicio() == idEjercicio) {
-                return ejercicio;
-            }
-        }
-
-        return null;
+    public Ejercicio obtenerEjercicioPorId(
+            int idEjercicio
+    ) {
+        return ejercicioDao.obtenerPorId(
+                idEjercicio
+        );
     }
 
     public List<Ejercicio> obtenerEjercicios() {
-        return ejercicios;
+        return ejercicioDao.obtenerTodos();
     }
 
     public boolean editarEjercicio(
@@ -64,29 +69,38 @@ public class EjercicioRepository {
             String descripcion
     ) {
         Ejercicio ejercicio =
-                obtenerEjercicioPorId(idEjercicio);
+                obtenerEjercicioPorId(
+                        idEjercicio
+                );
 
         if (ejercicio == null) {
             return false;
         }
 
         ejercicio.setNombre(nombre);
-        ejercicio.setGrupoMuscular(grupoMuscular);
-        ejercicio.setDescripcion(descripcion);
 
-        return true;
+        ejercicio.setGrupoMuscular(
+                grupoMuscular
+        );
+
+        ejercicio.setDescripcion(
+                descripcion
+        );
+
+        int filasActualizadas =
+                ejercicioDao.actualizar(ejercicio);
+
+        return filasActualizadas > 0;
     }
 
-    public boolean eliminarEjercicio(int idEjercicio) {
-        for (int i = 0; i < ejercicios.size(); i++) {
-            Ejercicio ejercicio = ejercicios.get(i);
+    public boolean eliminarEjercicio(
+            int idEjercicio
+    ) {
+        int filasEliminadas =
+                ejercicioDao.eliminarPorId(
+                        idEjercicio
+                );
 
-            if (ejercicio.getIdEjercicio() == idEjercicio) {
-                ejercicios.remove(i);
-                return true;
-            }
-        }
-
-        return false;
+        return filasEliminadas > 0;
     }
 }

@@ -1,25 +1,33 @@
 package com.example.gymtrack.repository;
 
+import com.example.gymtrack.data.GymTrackDatabase;
+import com.example.gymtrack.data.dao.SerieEntrenamientoDao;
 import com.example.gymtrack.model.SerieEntrenamiento;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SerieEntrenamientoRepository {
 
-    private static SerieEntrenamientoRepository instance;
+    private static SerieEntrenamientoRepository
+            instance;
 
-    private final List<SerieEntrenamiento> series;
-    private int siguienteId;
+    private final SerieEntrenamientoDao
+            serieEntrenamientoDao;
 
     private SerieEntrenamientoRepository() {
-        series = new ArrayList<>();
-        siguienteId = 1;
+        GymTrackDatabase database =
+                GymTrackDatabase.obtenerInstancia();
+
+        serieEntrenamientoDao =
+                database.serieEntrenamientoDao();
     }
 
-    public static SerieEntrenamientoRepository getInstance() {
+    public static SerieEntrenamientoRepository
+    getInstance() {
+
         if (instance == null) {
-            instance = new SerieEntrenamientoRepository();
+            instance =
+                    new SerieEntrenamientoRepository();
         }
 
         return instance;
@@ -33,40 +41,43 @@ public class SerieEntrenamientoRepository {
             int repeticiones,
             boolean completada
     ) {
-        SerieEntrenamiento serie = new SerieEntrenamiento(
-                siguienteId,
-                idEntrenamiento,
-                idRutinaEjercicio,
-                numeroSerie,
-                peso,
-                repeticiones,
-                completada
-        );
+        SerieEntrenamiento serie =
+                new SerieEntrenamiento(
+                        0,
+                        idEntrenamiento,
+                        idRutinaEjercicio,
+                        numeroSerie,
+                        peso,
+                        repeticiones,
+                        completada
+                );
 
-        series.add(serie);
-        siguienteId++;
+        long idGenerado =
+                serieEntrenamientoDao.insertar(
+                        serie
+                );
+
+        serie.setIdSerie(
+                (int) idGenerado
+        );
 
         return serie;
     }
 
-    public List<SerieEntrenamiento> obtenerPorEntrenamiento(
+    public List<SerieEntrenamiento>
+    obtenerPorEntrenamiento(
             int idEntrenamiento
     ) {
-        List<SerieEntrenamiento> resultado =
-                new ArrayList<>();
-
-        for (SerieEntrenamiento serie : series) {
-            if (serie.getIdEntrenamiento()
-                    == idEntrenamiento) {
-
-                resultado.add(serie);
-            }
-        }
-
-        return resultado;
+        return serieEntrenamientoDao
+                .obtenerPorEntrenamiento(
+                        idEntrenamiento
+                );
     }
 
-    public List<SerieEntrenamiento> obtenerSeries() {
-        return new ArrayList<>(series);
+    public List<SerieEntrenamiento>
+    obtenerSeries() {
+
+        return serieEntrenamientoDao
+                .obtenerTodas();
     }
 }

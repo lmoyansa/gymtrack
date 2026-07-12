@@ -1,8 +1,14 @@
 package com.example.gymtrack.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "series_entrenamiento")
 public class SerieEntrenamiento {
 
+    @PrimaryKey(autoGenerate = true)
     private int idSerie;
+
     private int idEntrenamiento;
     private int idRutinaEjercicio;
     private int numeroSerie;
@@ -10,11 +16,23 @@ public class SerieEntrenamiento {
     private int repeticiones;
     private boolean completada;
 
-    public SerieEntrenamiento(int idSerie, int idEntrenamiento, int idRutinaEjercicio,
-                              int numeroSerie, double peso, int repeticiones, boolean completada) {
+    public SerieEntrenamiento(
+            int idSerie,
+            int idEntrenamiento,
+            int idRutinaEjercicio,
+            int numeroSerie,
+            double peso,
+            int repeticiones,
+            boolean completada
+    ) {
         this.idSerie = idSerie;
-        this.idEntrenamiento = idEntrenamiento;
-        this.idRutinaEjercicio = idRutinaEjercicio;
+
+        this.idEntrenamiento =
+                idEntrenamiento;
+
+        this.idRutinaEjercicio =
+                idRutinaEjercicio;
+
         this.numeroSerie = numeroSerie;
         this.peso = peso;
         this.repeticiones = repeticiones;
@@ -33,23 +51,31 @@ public class SerieEntrenamiento {
         return idEntrenamiento;
     }
 
-    public void setIdEntrenamiento(int idEntrenamiento) {
-        this.idEntrenamiento = idEntrenamiento;
+    public void setIdEntrenamiento(
+            int idEntrenamiento
+    ) {
+        this.idEntrenamiento =
+                idEntrenamiento;
     }
 
     public int getIdRutinaEjercicio() {
         return idRutinaEjercicio;
     }
 
-    public void setIdRutinaEjercicio(int idRutinaEjercicio) {
-        this.idRutinaEjercicio = idRutinaEjercicio;
+    public void setIdRutinaEjercicio(
+            int idRutinaEjercicio
+    ) {
+        this.idRutinaEjercicio =
+                idRutinaEjercicio;
     }
 
     public int getNumeroSerie() {
         return numeroSerie;
     }
 
-    public void setNumeroSerie(int numeroSerie) {
+    public void setNumeroSerie(
+            int numeroSerie
+    ) {
         this.numeroSerie = numeroSerie;
     }
 
@@ -65,7 +91,9 @@ public class SerieEntrenamiento {
         return repeticiones;
     }
 
-    public void setRepeticiones(int repeticiones) {
+    public void setRepeticiones(
+            int repeticiones
+    ) {
         this.repeticiones = repeticiones;
     }
 
@@ -73,7 +101,9 @@ public class SerieEntrenamiento {
         return completada;
     }
 
-    public void setCompletada(boolean completada) {
+    public void setCompletada(
+            boolean completada
+    ) {
         this.completada = completada;
     }
 }
