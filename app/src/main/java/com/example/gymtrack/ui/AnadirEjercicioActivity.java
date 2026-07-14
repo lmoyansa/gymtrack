@@ -201,8 +201,10 @@ public class AnadirEjercicioActivity extends Activity {
                             textoDescanso
                     );
 
-            if (series <= 0
-                    || repeticiones <= 0) {
+            if (!ValidadorEjercicio
+                    .validarSeries(series)
+                    || !ValidadorEjercicio
+                    .validarRepeticiones(repeticiones)) {
 
                 Toast.makeText(
                         this,
@@ -213,7 +215,8 @@ public class AnadirEjercicioActivity extends Activity {
                 return;
             }
 
-            if (peso < 0
+            if (!ValidadorEjercicio
+                    .validarPeso(peso)
                     || descanso < 0) {
 
                 Toast.makeText(
