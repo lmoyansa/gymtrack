@@ -106,7 +106,7 @@ public class CrearRutinaActivity extends Activity {
                         .toString()
                         .trim();
 
-        if (!rutinaRepository
+        if (!RutinaRepository
                 .validarNombreRutina(nombre)) {
 
             Toast.makeText(

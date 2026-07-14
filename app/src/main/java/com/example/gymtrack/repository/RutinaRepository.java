@@ -128,7 +128,7 @@ public class RutinaRepository {
         return filasEliminadas > 0;
     }
 
-    public boolean validarNombreRutina(
+    public static boolean validarNombreRutina(
             String nombre
     ) {
         return nombre != null
