@@ -27,6 +27,26 @@ public interface RutinaDao {
 
     @Query(
             "SELECT * FROM rutinas "
+                    + "WHERE idRutina = :idRutina "
+                    + "AND idUsuario = :idUsuario "
+                    + "LIMIT 1"
+    )
+    Rutina obtenerPorIdYUsuario(
+            int idRutina,
+            int idUsuario
+    );
+
+    @Query(
+            "SELECT * FROM rutinas "
+                    + "WHERE idUsuario = :idUsuario "
+                    + "ORDER BY idRutina ASC"
+    )
+    List<Rutina> obtenerPorUsuario(
+            int idUsuario
+    );
+
+    @Query(
+            "SELECT * FROM rutinas "
                     + "ORDER BY idRutina ASC"
     )
     List<Rutina> obtenerTodas();

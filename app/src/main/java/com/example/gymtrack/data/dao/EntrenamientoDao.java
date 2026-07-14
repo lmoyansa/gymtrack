@@ -34,6 +34,15 @@ public interface EntrenamientoDao {
 
     @Query(
             "SELECT * FROM entrenamientos "
+                    + "WHERE idUsuario = :idUsuario "
+                    + "ORDER BY idEntrenamiento ASC"
+    )
+    List<Entrenamiento> obtenerPorUsuario(
+            int idUsuario
+    );
+
+    @Query(
+            "SELECT * FROM entrenamientos "
                     + "ORDER BY idEntrenamiento ASC"
     )
     List<Entrenamiento> obtenerTodos();
@@ -45,6 +54,18 @@ public interface EntrenamientoDao {
     )
     List<Entrenamiento> obtenerPorRutina(
             int idRutina
+    );
+
+    @Query(
+            "SELECT * FROM entrenamientos "
+                    + "WHERE idRutina = :idRutina "
+                    + "AND idUsuario = :idUsuario "
+                    + "ORDER BY idEntrenamiento ASC"
+    )
+    List<Entrenamiento>
+    obtenerPorRutinaYUsuario(
+            int idRutina,
+            int idUsuario
     );
 
     @Query(

@@ -34,6 +34,43 @@
             android:layout_marginTop="@dimen/gt_gap_small"
             android:text="Introduce los resultados y marca las series completadas." />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:background="@drawable/gt_background_card"
+            android:orientation="vertical"
+            android:padding="@dimen/gt_card_padding">
+
+            <TextView
+                style="@style/GymTrack_Overline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DURACIÓN DEL ENTRENAMIENTO" />
+
+            <TextView
+                android:id="@+id/tvDuracionEntrenamiento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_small"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textColor="@color/gt_foreground"
+                android:textSize="42sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAbrirTemporizadorEntrenamiento"
+                style="@style/GymTrack_Button_Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gt_button_height"
+                android:layout_marginTop="@dimen/gt_gap_medium"
+                android:text="Abrir temporizador de descanso" />
+
+        </LinearLayout>
+
         <TextView
             style="@style/GymTrack_SectionTitle"
             android:layout_width="match_parent"

@@ -77,11 +77,33 @@ public class EntrenamientoRepository {
         return entrenamientoDao.obtenerTodos();
     }
 
+    public List<Entrenamiento>
+    obtenerEntrenamientosPorUsuario(
+            int idUsuario
+    ) {
+        return entrenamientoDao
+                .obtenerPorUsuario(
+                        idUsuario
+                );
+    }
+
     public List<Entrenamiento> obtenerPorRutina(
             int idRutina
     ) {
         return entrenamientoDao.obtenerPorRutina(
                 idRutina
         );
+    }
+
+    public List<Entrenamiento>
+    obtenerPorRutinaYUsuario(
+            int idRutina,
+            int idUsuario
+    ) {
+        return entrenamientoDao
+                .obtenerPorRutinaYUsuario(
+                        idRutina,
+                        idUsuario
+                );
     }
 }

@@ -8,48 +8,129 @@ import android.widget.Toast;
 
 import com.example.gymtrack.R;
 import com.example.gymtrack.repository.RutinaRepository;
+import com.example.gymtrack.session.SessionManager;
 
 public class CrearRutinaActivity extends Activity {
 
     private EditText etNombreRutina;
     private EditText etDescripcionRutina;
     private EditText etObjetivoRutina;
-    private Button btnGuardarRutina;
-    private Button btnCancelarCrearRutina;
 
     private RutinaRepository rutinaRepository;
+    private SessionManager sessionManager;
+
+    private int idUsuarioActual;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(
+            Bundle savedInstanceState
+    ) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_rutina);
 
-        etNombreRutina = findViewById(R.id.etNombreRutina);
-        etDescripcionRutina = findViewById(R.id.etDescripcionRutina);
-        etObjetivoRutina = findViewById(R.id.etObjetivoRutina);
-        btnGuardarRutina = findViewById(R.id.btnGuardarRutina);
-        btnCancelarCrearRutina = findViewById(R.id.btnCancelarCrearRutina);
+        setContentView(
+                R.layout.activity_crear_rutina
+        );
 
-        rutinaRepository = RutinaRepository.getInstance();
+        rutinaRepository =
+                RutinaRepository.getInstance();
 
-        btnGuardarRutina.setOnClickListener(v -> guardarRutina());
+        sessionManager =
+                new SessionManager(this);
 
-        btnCancelarCrearRutina.setOnClickListener(v -> finish());
-    }
+        idUsuarioActual =
+                sessionManager.obtenerIdUsuario();
 
-    private void guardarRutina() {
-        String nombre = etNombreRutina.getText().toString().trim();
-        String descripcion = etDescripcionRutina.getText().toString().trim();
-        String objetivo = etObjetivoRutina.getText().toString().trim();
+        if (idUsuarioActual < 0) {
+            Toast.makeText(
+                    this,
+                    "No hay una sesión válida",
+                    Toast.LENGTH_SHORT
+            ).show();
 
-        if (!rutinaRepository.validarNombreRutina(nombre)) {
-            Toast.makeText(this, "El nombre de la rutina es obligatorio", Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
 
-        rutinaRepository.crearRutina(nombre, descripcion, objetivo);
+        etNombreRutina =
+                findViewById(
+                        R.id.etNombreRutina
+                );
 
-        Toast.makeText(this, "Rutina creada correctamente", Toast.LENGTH_SHORT).show();
+        etDescripcionRutina =
+                findViewById(
+                        R.id.etDescripcionRutina
+                );
+
+        etObjetivoRutina =
+                findViewById(
+                        R.id.etObjetivoRutina
+                );
+
+        Button btnGuardarRutina =
+                findViewById(
+                        R.id.btnGuardarRutina
+                );
+
+        Button btnCancelarCrearRutina =
+                findViewById(
+                        R.id.btnCancelarCrearRutina
+                );
+
+        btnGuardarRutina
+                .setOnClickListener(
+                        v -> guardarRutina()
+                );
+
+        btnCancelarCrearRutina
+                .setOnClickListener(
+                        v -> finish()
+                );
+    }
+
+    private void guardarRutina() {
+        String nombre =
+                etNombreRutina
+                        .getText()
+                        .toString()
+                        .trim();
+
+        String descripcion =
+                etDescripcionRutina
+                        .getText()
+                        .toString()
+                        .trim();
+
+        String objetivo =
+                etObjetivoRutina
+                        .getText()
+                        .toString()
+                        .trim();
+
+        if (!rutinaRepository
+                .validarNombreRutina(nombre)) {
+
+            Toast.makeText(
+                    this,
+                    "El nombre de la rutina es obligatorio",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        rutinaRepository.crearRutina(
+                idUsuarioActual,
+                nombre,
+                descripcion,
+                objetivo
+        );
+
+        Toast.makeText(
+                this,
+                "Rutina creada correctamente",
+                Toast.LENGTH_SHORT
+        ).show();
+
         finish();
     }
 }

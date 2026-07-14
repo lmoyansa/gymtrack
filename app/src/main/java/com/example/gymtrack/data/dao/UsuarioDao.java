@@ -31,6 +31,19 @@ public interface UsuarioDao {
 
     @Query(
             "SELECT * FROM usuarios "
+                    + "WHERE LOWER(email) = LOWER(:email) "
+                    + "LIMIT 1"
+    )
+    Usuario obtenerPorEmail(String email);
+
+    @Query(
+            "SELECT COUNT(*) FROM usuarios "
+                    + "WHERE LOWER(email) = LOWER(:email)"
+    )
+    int contarPorEmail(String email);
+
+    @Query(
+            "SELECT * FROM usuarios "
                     + "ORDER BY idUsuario ASC"
     )
     List<Usuario> obtenerTodos();

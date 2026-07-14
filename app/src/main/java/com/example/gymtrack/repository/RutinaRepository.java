@@ -32,13 +32,34 @@ public class RutinaRepository {
         return rutinaDao.obtenerTodas();
     }
 
+    public List<Rutina> obtenerRutinasPorUsuario(
+            int idUsuario
+    ) {
+        return rutinaDao.obtenerPorUsuario(
+                idUsuario
+        );
+    }
+
     public Rutina obtenerRutinaPorId(
             int idRutina
     ) {
-        return rutinaDao.obtenerPorId(idRutina);
+        return rutinaDao.obtenerPorId(
+                idRutina
+        );
+    }
+
+    public Rutina obtenerRutinaPorIdYUsuario(
+            int idRutina,
+            int idUsuario
+    ) {
+        return rutinaDao.obtenerPorIdYUsuario(
+                idRutina,
+                idUsuario
+        );
     }
 
     public Rutina crearRutina(
+            int idUsuario,
             String nombre,
             String descripcion,
             String objetivo
@@ -46,7 +67,7 @@ public class RutinaRepository {
         Rutina nuevaRutina =
                 new Rutina(
                         0,
-                        1,
+                        idUsuario,
                         nombre,
                         descripcion,
                         objetivo,
@@ -55,7 +76,9 @@ public class RutinaRepository {
                 );
 
         long idGenerado =
-                rutinaDao.insertar(nuevaRutina);
+                rutinaDao.insertar(
+                        nuevaRutina
+                );
 
         nuevaRutina.setIdRutina(
                 (int) idGenerado
@@ -98,7 +121,9 @@ public class RutinaRepository {
         }
 
         int filasEliminadas =
-                rutinaDao.eliminarPorId(idRutina);
+                rutinaDao.eliminarPorId(
+                        idRutina
+                );
 
         return filasEliminadas > 0;
     }

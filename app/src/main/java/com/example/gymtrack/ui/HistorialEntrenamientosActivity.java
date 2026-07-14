@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gymtrack.R;
 import com.example.gymtrack.model.Entrenamiento;
@@ -16,23 +17,34 @@ import com.example.gymtrack.model.SerieEntrenamiento;
 import com.example.gymtrack.repository.EntrenamientoRepository;
 import com.example.gymtrack.repository.RutinaRepository;
 import com.example.gymtrack.repository.SerieEntrenamientoRepository;
+import com.example.gymtrack.session.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class HistorialEntrenamientosActivity extends Activity {
+public class HistorialEntrenamientosActivity
+        extends Activity {
 
     private TextView tvHistorialVacio;
     private LinearLayout contenedorHistorial;
 
-    private EntrenamientoRepository entrenamientoRepository;
-    private SerieEntrenamientoRepository serieRepository;
+    private EntrenamientoRepository
+            entrenamientoRepository;
+
+    private SerieEntrenamientoRepository
+            serieRepository;
+
     private RutinaRepository rutinaRepository;
+    private SessionManager sessionManager;
+
+    private int idUsuarioActual;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(
+            Bundle savedInstanceState
+    ) {
         super.onCreate(savedInstanceState);
 
         setContentView(
@@ -40,10 +52,14 @@ public class HistorialEntrenamientosActivity extends Activity {
         );
 
         tvHistorialVacio =
-                findViewById(R.id.tvHistorialVacio);
+                findViewById(
+                        R.id.tvHistorialVacio
+                );
 
         contenedorHistorial =
-                findViewById(R.id.contenedorHistorial);
+                findViewById(
+                        R.id.contenedorHistorial
+                );
 
         Button btnVolverInicioHistorial =
                 findViewById(
@@ -51,23 +67,57 @@ public class HistorialEntrenamientosActivity extends Activity {
                 );
 
         entrenamientoRepository =
-                EntrenamientoRepository.getInstance();
+                EntrenamientoRepository
+                        .getInstance();
 
         serieRepository =
-                SerieEntrenamientoRepository.getInstance();
+                SerieEntrenamientoRepository
+                        .getInstance();
 
         rutinaRepository =
                 RutinaRepository.getInstance();
 
-        btnVolverInicioHistorial.setOnClickListener(
-                v -> finish()
-        );
+        sessionManager =
+                new SessionManager(this);
+
+        if (!actualizarUsuarioActual()) {
+            finalizarPorSesionInvalida();
+            return;
+        }
+
+        btnVolverInicioHistorial
+                .setOnClickListener(
+                        v -> finish()
+                );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (!actualizarUsuarioActual()) {
+            finalizarPorSesionInvalida();
+            return;
+        }
+
         cargarHistorial();
+    }
+
+    private boolean actualizarUsuarioActual() {
+        idUsuarioActual =
+                sessionManager.obtenerIdUsuario();
+
+        return idUsuarioActual >= 0;
+    }
+
+    private void finalizarPorSesionInvalida() {
+        Toast.makeText(
+                this,
+                "No hay una sesión válida",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        finish();
     }
 
     private void cargarHistorial() {
@@ -75,19 +125,27 @@ public class HistorialEntrenamientosActivity extends Activity {
 
         List<Entrenamiento> entrenamientos =
                 entrenamientoRepository
-                        .obtenerEntrenamientos();
+                        .obtenerEntrenamientosPorUsuario(
+                                idUsuarioActual
+                        );
 
         if (entrenamientos.isEmpty()) {
-            tvHistorialVacio.setVisibility(View.VISIBLE);
+            tvHistorialVacio.setVisibility(
+                    View.VISIBLE
+            );
+
             return;
         }
 
-        tvHistorialVacio.setVisibility(View.GONE);
+        tvHistorialVacio.setVisibility(
+                View.GONE
+        );
 
-        for (int i = entrenamientos.size() - 1;
-             i >= 0;
-             i--) {
-
+        for (
+                int i = entrenamientos.size() - 1;
+                i >= 0;
+                i--
+        ) {
             Entrenamiento entrenamiento =
                     entrenamientos.get(i);
 
@@ -96,7 +154,9 @@ public class HistorialEntrenamientosActivity extends Activity {
                             entrenamiento
                     );
 
-            contenedorHistorial.addView(tarjeta);
+            contenedorHistorial.addView(
+                    tarjeta
+            );
         }
     }
 
@@ -106,7 +166,9 @@ public class HistorialEntrenamientosActivity extends Activity {
         LinearLayout tarjeta =
                 new LinearLayout(this);
 
-        tarjeta.setOrientation(LinearLayout.VERTICAL);
+        tarjeta.setOrientation(
+                LinearLayout.VERTICAL
+        );
 
         tarjeta.setBackgroundResource(
                 R.drawable.gt_background_card
@@ -132,12 +194,17 @@ public class HistorialEntrenamientosActivity extends Activity {
                 dpToPx(16)
         );
 
-        tarjeta.setLayoutParams(parametrosTarjeta);
+        tarjeta.setLayoutParams(
+                parametrosTarjeta
+        );
 
-        TextView tvFecha = new TextView(this);
+        TextView tvFecha =
+                new TextView(this);
 
         tvFecha.setText(
-                formatearFecha(entrenamiento.getFecha())
+                formatearFecha(
+                        entrenamiento.getFecha()
+                )
         );
 
         tvFecha.setTextColor(
@@ -149,12 +216,18 @@ public class HistorialEntrenamientosActivity extends Activity {
                 12
         );
 
-        tvFecha.setTypeface(Typeface.DEFAULT_BOLD);
-        tvFecha.setLetterSpacing(0.06f);
+        tvFecha.setTypeface(
+                Typeface.DEFAULT_BOLD
+        );
+
+        tvFecha.setLetterSpacing(
+                0.06f
+        );
 
         tarjeta.addView(tvFecha);
 
-        TextView tvNombreRutina = new TextView(this);
+        TextView tvNombreRutina =
+                new TextView(this);
 
         tvNombreRutina.setText(
                 obtenerNombreRutina(
@@ -191,9 +264,13 @@ public class HistorialEntrenamientosActivity extends Activity {
                 0
         );
 
-        tvNombreRutina.setLayoutParams(parametrosNombre);
+        tvNombreRutina.setLayoutParams(
+                parametrosNombre
+        );
 
-        tarjeta.addView(tvNombreRutina);
+        tarjeta.addView(
+                tvNombreRutina
+        );
 
         LinearLayout panelResumen =
                 new LinearLayout(this);
@@ -226,9 +303,12 @@ public class HistorialEntrenamientosActivity extends Activity {
                 0
         );
 
-        panelResumen.setLayoutParams(parametrosResumen);
+        panelResumen.setLayoutParams(
+                parametrosResumen
+        );
 
-        TextView tvDuracion = new TextView(this);
+        TextView tvDuracion =
+                new TextView(this);
 
         tvDuracion.setText(
                 "Duración: "
@@ -247,13 +327,17 @@ public class HistorialEntrenamientosActivity extends Activity {
                 15
         );
 
-        panelResumen.addView(tvDuracion);
+        panelResumen.addView(
+                tvDuracion
+        );
 
-        TextView tvSeries = new TextView(this);
+        TextView tvSeries =
+                new TextView(this);
 
         tvSeries.setText(
                 obtenerResumenSeries(
-                        entrenamiento.getIdEntrenamiento()
+                        entrenamiento
+                                .getIdEntrenamiento()
                 )
         );
 
@@ -279,7 +363,9 @@ public class HistorialEntrenamientosActivity extends Activity {
                 0
         );
 
-        tvSeries.setLayoutParams(parametrosSeries);
+        tvSeries.setLayoutParams(
+                parametrosSeries
+        );
 
         panelResumen.addView(tvSeries);
         tarjeta.addView(panelResumen);
@@ -288,13 +374,17 @@ public class HistorialEntrenamientosActivity extends Activity {
                 entrenamiento.getObservaciones();
 
         if (observaciones != null
-                && !observaciones.trim().isEmpty()) {
+                && !observaciones
+                .trim()
+                .isEmpty()) {
 
             TextView tvObservaciones =
                     new TextView(this);
 
             tvObservaciones.setText(
-                    "“" + observaciones + "”"
+                    "“"
+                            + observaciones
+                            + "”"
             );
 
             tvObservaciones.setTextColor(
@@ -324,17 +414,23 @@ public class HistorialEntrenamientosActivity extends Activity {
                     parametrosObservaciones
             );
 
-            tarjeta.addView(tvObservaciones);
+            tarjeta.addView(
+                    tvObservaciones
+            );
         }
 
         return tarjeta;
     }
 
-    private String obtenerNombreRutina(int idRutina) {
+    private String obtenerNombreRutina(
+            int idRutina
+    ) {
         Rutina rutina =
-                rutinaRepository.obtenerRutinaPorId(
-                        idRutina
-                );
+                rutinaRepository
+                        .obtenerRutinaPorIdYUsuario(
+                                idRutina,
+                                idUsuarioActual
+                        );
 
         if (rutina == null) {
             return "Rutina eliminada";
@@ -347,13 +443,17 @@ public class HistorialEntrenamientosActivity extends Activity {
             int idEntrenamiento
     ) {
         List<SerieEntrenamiento> series =
-                serieRepository.obtenerPorEntrenamiento(
-                        idEntrenamiento
-                );
+                serieRepository
+                        .obtenerPorEntrenamiento(
+                                idEntrenamiento
+                        );
 
         int seriesCompletadas = 0;
 
-        for (SerieEntrenamiento serie : series) {
+        for (
+                SerieEntrenamiento serie
+                : series
+        ) {
             if (serie.isCompletada()) {
                 seriesCompletadas++;
             }
@@ -365,7 +465,9 @@ public class HistorialEntrenamientosActivity extends Activity {
                 + " series completadas";
     }
 
-    private String formatearFecha(Date fecha) {
+    private String formatearFecha(
+            Date fecha
+    ) {
         if (fecha == null) {
             return "FECHA NO DISPONIBLE";
         }
@@ -378,7 +480,9 @@ public class HistorialEntrenamientosActivity extends Activity {
 
         return formato
                 .format(fecha)
-                .toUpperCase(Locale.getDefault());
+                .toUpperCase(
+                        Locale.getDefault()
+                );
     }
 
     private String formatearDuracion(
@@ -392,7 +496,8 @@ public class HistorialEntrenamientosActivity extends Activity {
             return "1 minuto";
         }
 
-        return duracionMinutos + " minutos";
+        return duracionMinutos
+                + " minutos";
     }
 
     private int dpToPx(int dp) {

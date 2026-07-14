@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gt_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/gt_screen_padding">
+
+        <TextView
+            style="@style/GymTrack_Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GYMTRACK" />
+
+        <TextView
+            style="@style/GymTrack_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_small"
+            android:gravity="center"
+            android:text="CREAR CUENTA"
+            android:textAlignment="center"
+            android:textSize="38sp" />
+
+        <TextView
+            style="@style/GymTrack_Muted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_medium"
+            android:gravity="center"
+            android:text="Regístrate para guardar tus rutinas y entrenamientos."
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gt_gap_large"
+            android:background="@drawable/gt_background_card"
+            android:orientation="vertical"
+            android:padding="@dimen/gt_card_padding">
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre" />
+
+            <EditText
+                android:id="@+id/etNombreRegistro"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_small"
+                android:autofillHints="name"
+                android:hint="Tu nombre"
+                android:inputType="textPersonName|textCapWords"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_large"
+                android:text="Correo electrónico" />
+
+            <EditText
+                android:id="@+id/etEmailRegistro"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_small"
+                android:autofillHints="emailAddress"
+                android:hint="nombre@correo.com"
+                android:inputType="textEmailAddress"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_large"
+                android:text="Contraseña" />
+
+            <EditText
+                android:id="@+id/etPasswordRegistro"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_small"
+                android:autofillHints="newPassword"
+                android:hint="Mínimo 8 caracteres"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/GymTrack_Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_large"
+                android:text="Confirmar contraseña" />
+
+            <EditText
+                android:id="@+id/etConfirmarPasswordRegistro"
+                style="@style/GymTrack_Input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gt_gap_small"
+                android:autofillHints="newPassword"
+                android:hint="Repite tu contraseña"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+
+            <Button
+                android:id="@+id/btnCrearCuenta"
+                style="@style/GymTrack_Button_Primary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gt_button_height"
+                android:layout_marginTop="@dimen/gt_gap_large"
+                android:text="Crear cuenta" />
+
+            <Button
+                android:id="@+id/btnVolverLogin"
+                style="@style/GymTrack_Button_Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gt_button_height"
+                android:layout_marginTop="@dimen/gt_gap_medium"
+                android:text="Ya tengo una cuenta" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/gt_gap_large" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -134,7 +134,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/gt_button_height"
             android:layout_marginTop="@dimen/gt_gap_medium"
-            android:text="Volver al inicio" />
+            android:text="Volver" />
 
         <Space
             android:layout_width="match_parent"
