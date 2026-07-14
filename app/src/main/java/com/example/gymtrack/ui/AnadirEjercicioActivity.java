@@ -10,6 +10,7 @@ import com.example.gymtrack.R;
 import com.example.gymtrack.model.Ejercicio;
 import com.example.gymtrack.repository.EjercicioRepository;
 import com.example.gymtrack.repository.RutinaEjercicioRepository;
+import com.example.gymtrack.validation.ValidadorEjercicio;
 
 public class AnadirEjercicioActivity extends Activity {
 
@@ -33,22 +34,62 @@ public class AnadirEjercicioActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anadir_ejercicio);
 
-        etNombreEjercicio = findViewById(R.id.etNombreEjercicio);
-        etGrupoMuscular = findViewById(R.id.etGrupoMuscular);
-        etDescripcionEjercicio = findViewById(R.id.etDescripcionEjercicio);
-        etSeriesPlanificadas = findViewById(R.id.etSeriesPlanificadas);
-        etRepeticionesPlanificadas = findViewById(R.id.etRepeticionesPlanificadas);
-        etPesoObjetivo = findViewById(R.id.etPesoObjetivo);
-        etDescansoSegundos = findViewById(R.id.etDescansoSegundos);
+        etNombreEjercicio =
+                findViewById(
+                        R.id.etNombreEjercicio
+                );
 
-        Button btnGuardarEjercicio = findViewById(R.id.btnGuardarEjercicio);
+        etGrupoMuscular =
+                findViewById(
+                        R.id.etGrupoMuscular
+                );
+
+        etDescripcionEjercicio =
+                findViewById(
+                        R.id.etDescripcionEjercicio
+                );
+
+        etSeriesPlanificadas =
+                findViewById(
+                        R.id.etSeriesPlanificadas
+                );
+
+        etRepeticionesPlanificadas =
+                findViewById(
+                        R.id.etRepeticionesPlanificadas
+                );
+
+        etPesoObjetivo =
+                findViewById(
+                        R.id.etPesoObjetivo
+                );
+
+        etDescansoSegundos =
+                findViewById(
+                        R.id.etDescansoSegundos
+                );
+
+        Button btnGuardarEjercicio =
+                findViewById(
+                        R.id.btnGuardarEjercicio
+                );
+
         Button btnCancelarAnadirEjercicio =
-                findViewById(R.id.btnCancelarAnadirEjercicio);
+                findViewById(
+                        R.id.btnCancelarAnadirEjercicio
+                );
 
-        ejercicioRepository = EjercicioRepository.getInstance();
-        rutinaEjercicioRepository = RutinaEjercicioRepository.getInstance();
+        ejercicioRepository =
+                EjercicioRepository.getInstance();
 
-        idRutina = getIntent().getIntExtra(EXTRA_ID_RUTINA, -1);
+        rutinaEjercicioRepository =
+                RutinaEjercicioRepository.getInstance();
+
+        idRutina =
+                getIntent().getIntExtra(
+                        EXTRA_ID_RUTINA,
+                        -1
+                );
 
         if (idRutina == -1) {
             Toast.makeText(
@@ -61,28 +102,61 @@ public class AnadirEjercicioActivity extends Activity {
             return;
         }
 
-        btnGuardarEjercicio.setOnClickListener(v -> guardarEjercicio());
-        btnCancelarAnadirEjercicio.setOnClickListener(v -> finish());
+        btnGuardarEjercicio.setOnClickListener(
+                v -> guardarEjercicio()
+        );
+
+        btnCancelarAnadirEjercicio.setOnClickListener(
+                v -> finish()
+        );
     }
 
     private void guardarEjercicio() {
-        String nombre = etNombreEjercicio.getText().toString().trim();
-        String grupoMuscular = etGrupoMuscular.getText().toString().trim();
-        String descripcion = etDescripcionEjercicio.getText().toString().trim();
+        String nombre =
+                etNombreEjercicio
+                        .getText()
+                        .toString()
+                        .trim();
+
+        String grupoMuscular =
+                etGrupoMuscular
+                        .getText()
+                        .toString()
+                        .trim();
+
+        String descripcion =
+                etDescripcionEjercicio
+                        .getText()
+                        .toString()
+                        .trim();
 
         String textoSeries =
-                etSeriesPlanificadas.getText().toString().trim();
+                etSeriesPlanificadas
+                        .getText()
+                        .toString()
+                        .trim();
 
         String textoRepeticiones =
-                etRepeticionesPlanificadas.getText().toString().trim();
+                etRepeticionesPlanificadas
+                        .getText()
+                        .toString()
+                        .trim();
 
         String textoPeso =
-                etPesoObjetivo.getText().toString().trim();
+                etPesoObjetivo
+                        .getText()
+                        .toString()
+                        .trim();
 
         String textoDescanso =
-                etDescansoSegundos.getText().toString().trim();
+                etDescansoSegundos
+                        .getText()
+                        .toString()
+                        .trim();
 
-        if (nombre.isEmpty()) {
+        if (!ValidadorEjercicio
+                .validarNombreEjercicio(nombre)) {
+
             Toast.makeText(
                     this,
                     "El nombre del ejercicio es obligatorio",
@@ -107,12 +181,29 @@ public class AnadirEjercicioActivity extends Activity {
         }
 
         try {
-            int series = Integer.parseInt(textoSeries);
-            int repeticiones = Integer.parseInt(textoRepeticiones);
-            double peso = Double.parseDouble(textoPeso);
-            int descanso = Integer.parseInt(textoDescanso);
+            int series =
+                    Integer.parseInt(
+                            textoSeries
+                    );
 
-            if (series <= 0 || repeticiones <= 0) {
+            int repeticiones =
+                    Integer.parseInt(
+                            textoRepeticiones
+                    );
+
+            double peso =
+                    Double.parseDouble(
+                            textoPeso
+                    );
+
+            int descanso =
+                    Integer.parseInt(
+                            textoDescanso
+                    );
+
+            if (series <= 0
+                    || repeticiones <= 0) {
+
                 Toast.makeText(
                         this,
                         "Las series y repeticiones deben ser mayores que cero",
@@ -122,7 +213,9 @@ public class AnadirEjercicioActivity extends Activity {
                 return;
             }
 
-            if (peso < 0 || descanso < 0) {
+            if (peso < 0
+                    || descanso < 0) {
+
                 Toast.makeText(
                         this,
                         "El peso y el descanso no pueden ser negativos",
@@ -132,20 +225,23 @@ public class AnadirEjercicioActivity extends Activity {
                 return;
             }
 
-            Ejercicio ejercicio = ejercicioRepository.crearEjercicio(
-                    nombre,
-                    grupoMuscular,
-                    descripcion
-            );
+            Ejercicio ejercicio =
+                    ejercicioRepository
+                            .crearEjercicio(
+                                    nombre,
+                                    grupoMuscular,
+                                    descripcion
+                            );
 
-            rutinaEjercicioRepository.crearRutinaEjercicio(
-                    idRutina,
-                    ejercicio.getIdEjercicio(),
-                    series,
-                    repeticiones,
-                    peso,
-                    descanso
-            );
+            rutinaEjercicioRepository
+                    .crearRutinaEjercicio(
+                            idRutina,
+                            ejercicio.getIdEjercicio(),
+                            series,
+                            repeticiones,
+                            peso,
+                            descanso
+                    );
 
             Toast.makeText(
                     this,
