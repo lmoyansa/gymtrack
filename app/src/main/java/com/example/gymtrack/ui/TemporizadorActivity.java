@@ -11,19 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gymtrack.R;
+import com.example.gymtrack.timer.TemporizadorControlador;
 
 import java.util.Locale;
 
 public class TemporizadorActivity extends Activity {
-
-    private static final long TIEMPO_60_SEGUNDOS =
-            60_000L;
-
-    private static final long TIEMPO_90_SEGUNDOS =
-            90_000L;
-
-    private static final long TIEMPO_120_SEGUNDOS =
-            120_000L;
 
     private static final String ESTADO_TIEMPO_SELECCIONADO =
             "tiempoSeleccionado";
@@ -44,16 +36,13 @@ public class TemporizadorActivity extends Activity {
 
     private CountDownTimer countDownTimer;
 
-    private long tiempoSeleccionado =
-            TIEMPO_90_SEGUNDOS;
-
-    private long tiempoRestante =
-            TIEMPO_90_SEGUNDOS;
-
-    private boolean temporizadorEnMarcha;
+    private TemporizadorControlador
+            temporizadorControlador;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(
+            Bundle savedInstanceState
+    ) {
         super.onCreate(savedInstanceState);
 
         setContentView(
@@ -71,13 +60,19 @@ public class TemporizadorActivity extends Activity {
                 );
 
         btnTiempo60 =
-                findViewById(R.id.btnTiempo60);
+                findViewById(
+                        R.id.btnTiempo60
+                );
 
         btnTiempo90 =
-                findViewById(R.id.btnTiempo90);
+                findViewById(
+                        R.id.btnTiempo90
+                );
 
         btnTiempo120 =
-                findViewById(R.id.btnTiempo120);
+                findViewById(
+                        R.id.btnTiempo120
+                );
 
         btnIniciarPausarTemporizador =
                 findViewById(
@@ -97,13 +92,14 @@ public class TemporizadorActivity extends Activity {
         boolean reanudarTemporizador = false;
 
         if (savedInstanceState != null) {
-            tiempoSeleccionado =
+            long tiempoSeleccionado =
                     savedInstanceState.getLong(
                             ESTADO_TIEMPO_SELECCIONADO,
-                            TIEMPO_90_SEGUNDOS
+                            TemporizadorControlador
+                                    .TIEMPO_90_SEGUNDOS
                     );
 
-            tiempoRestante =
+            long tiempoRestante =
                     savedInstanceState.getLong(
                             ESTADO_TIEMPO_RESTANTE,
                             tiempoSeleccionado
@@ -114,49 +110,70 @@ public class TemporizadorActivity extends Activity {
                             ESTADO_EN_MARCHA,
                             false
                     );
+
+            temporizadorControlador =
+                    new TemporizadorControlador(
+                            tiempoSeleccionado,
+                            tiempoRestante,
+                            reanudarTemporizador
+                    );
+
+        } else {
+            temporizadorControlador =
+                    new TemporizadorControlador();
         }
 
-        btnTiempo60.setOnClickListener(v ->
-                seleccionarTiempo(
-                        TIEMPO_60_SEGUNDOS
+        btnTiempo60.setOnClickListener(
+                v -> seleccionarTiempo(
+                        TemporizadorControlador
+                                .TIEMPO_60_SEGUNDOS
                 )
         );
 
-        btnTiempo90.setOnClickListener(v ->
-                seleccionarTiempo(
-                        TIEMPO_90_SEGUNDOS
+        btnTiempo90.setOnClickListener(
+                v -> seleccionarTiempo(
+                        TemporizadorControlador
+                                .TIEMPO_90_SEGUNDOS
                 )
         );
 
-        btnTiempo120.setOnClickListener(v ->
-                seleccionarTiempo(
-                        TIEMPO_120_SEGUNDOS
+        btnTiempo120.setOnClickListener(
+                v -> seleccionarTiempo(
+                        TemporizadorControlador
+                                .TIEMPO_120_SEGUNDOS
                 )
         );
 
         btnIniciarPausarTemporizador
-                .setOnClickListener(v -> {
+                .setOnClickListener(
+                        v -> {
+                            if (temporizadorControlador
+                                    .isTemporizadorEnMarcha()) {
 
-                    if (temporizadorEnMarcha) {
-                        pausarTemporizador();
-                    } else {
-                        iniciarTemporizador();
-                    }
-                });
+                                pausarTemporizador();
+
+                            } else {
+                                iniciarTemporizador();
+                            }
+                        }
+                );
 
         btnReiniciarTemporizador
-                .setOnClickListener(v ->
-                        reiniciarTemporizador()
+                .setOnClickListener(
+                        v -> reiniciarTemporizador()
                 );
 
         btnVolverInicioTemporizador
-                .setOnClickListener(v -> finish());
+                .setOnClickListener(
+                        v -> finish()
+                );
 
         actualizarTiempoMostrado();
         actualizarBotonesRapidos();
 
         if (reanudarTemporizador
-                && tiempoRestante > 0) {
+                && temporizadorControlador
+                .getTiempoRestante() > 0) {
 
             iniciarTemporizador();
 
@@ -165,12 +182,20 @@ public class TemporizadorActivity extends Activity {
         }
     }
 
-    private void seleccionarTiempo(long tiempo) {
+    private void seleccionarTiempo(
+            long tiempo
+    ) {
         cancelarCuentaAtras();
 
-        tiempoSeleccionado = tiempo;
-        tiempoRestante = tiempo;
-        temporizadorEnMarcha = false;
+        boolean tiempoValido =
+                temporizadorControlador
+                        .seleccionarTiempo(
+                                tiempo
+                        );
+
+        if (!tiempoValido) {
+            return;
+        }
 
         tvEstadoTemporizador.setText(
                 "TIEMPO SELECCIONADO"
@@ -185,11 +210,7 @@ public class TemporizadorActivity extends Activity {
     }
 
     private void iniciarTemporizador() {
-        if (tiempoRestante <= 0) {
-            tiempoRestante = tiempoSeleccionado;
-        }
-
-        temporizadorEnMarcha = true;
+        temporizadorControlador.iniciar();
 
         tvEstadoTemporizador.setText(
                 "DESCANSANDO"
@@ -201,23 +222,26 @@ public class TemporizadorActivity extends Activity {
 
         countDownTimer =
                 new CountDownTimer(
-                        tiempoRestante,
+                        temporizadorControlador
+                                .getTiempoRestante(),
                         1_000L
                 ) {
                     @Override
                     public void onTick(
                             long millisHastaFinalizar
                     ) {
-                        tiempoRestante =
-                                millisHastaFinalizar;
+                        temporizadorControlador
+                                .actualizarTiempoRestante(
+                                        millisHastaFinalizar
+                                );
 
                         actualizarTiempoMostrado();
                     }
 
                     @Override
                     public void onFinish() {
-                        tiempoRestante = 0;
-                        temporizadorEnMarcha = false;
+                        temporizadorControlador
+                                .finalizar();
 
                         actualizarTiempoMostrado();
 
@@ -226,7 +250,9 @@ public class TemporizadorActivity extends Activity {
                         );
 
                         btnIniciarPausarTemporizador
-                                .setText("Repetir");
+                                .setText(
+                                        "Repetir"
+                                );
 
                         avisarFinTemporizador();
                     }
@@ -236,7 +262,7 @@ public class TemporizadorActivity extends Activity {
     private void pausarTemporizador() {
         cancelarCuentaAtras();
 
-        temporizadorEnMarcha = false;
+        temporizadorControlador.pausar();
 
         tvEstadoTemporizador.setText(
                 "TEMPORIZADOR PAUSADO"
@@ -250,8 +276,7 @@ public class TemporizadorActivity extends Activity {
     private void reiniciarTemporizador() {
         cancelarCuentaAtras();
 
-        tiempoRestante = tiempoSeleccionado;
-        temporizadorEnMarcha = false;
+        temporizadorControlador.reiniciar();
 
         tvEstadoTemporizador.setText(
                 "LISTO PARA EMPEZAR"
@@ -265,11 +290,7 @@ public class TemporizadorActivity extends Activity {
     }
 
     private void actualizarEstadoInicial() {
-        temporizadorEnMarcha = false;
-
-        if (tiempoRestante <= 0) {
-            tiempoRestante = tiempoSeleccionado;
-        }
+        temporizadorControlador.preparar();
 
         tvEstadoTemporizador.setText(
                 "LISTO PARA EMPEZAR"
@@ -284,10 +305,17 @@ public class TemporizadorActivity extends Activity {
 
     private void actualizarTiempoMostrado() {
         long segundosTotales =
-                (tiempoRestante + 999L) / 1_000L;
+                (
+                        temporizadorControlador
+                                .getTiempoRestante()
+                                + 999L
+                ) / 1_000L;
 
-        long minutos = segundosTotales / 60L;
-        long segundos = segundosTotales % 60L;
+        long minutos =
+                segundosTotales / 60L;
+
+        long segundos =
+                segundosTotales % 60L;
 
         String tiempoFormateado =
                 String.format(
@@ -303,23 +331,30 @@ public class TemporizadorActivity extends Activity {
     }
 
     private void actualizarBotonesRapidos() {
+        long tiempoSeleccionado =
+                temporizadorControlador
+                        .getTiempoSeleccionado();
+
         btnTiempo60.setAlpha(
                 tiempoSeleccionado
-                        == TIEMPO_60_SEGUNDOS
+                        == TemporizadorControlador
+                        .TIEMPO_60_SEGUNDOS
                         ? 1.0f
                         : 0.6f
         );
 
         btnTiempo90.setAlpha(
                 tiempoSeleccionado
-                        == TIEMPO_90_SEGUNDOS
+                        == TemporizadorControlador
+                        .TIEMPO_90_SEGUNDOS
                         ? 1.0f
                         : 0.6f
         );
 
         btnTiempo120.setAlpha(
                 tiempoSeleccionado
-                        == TIEMPO_120_SEGUNDOS
+                        == TemporizadorControlador
+                        .TIEMPO_120_SEGUNDOS
                         ? 1.0f
                         : 0.6f
         );
@@ -377,17 +412,20 @@ public class TemporizadorActivity extends Activity {
 
         outState.putLong(
                 ESTADO_TIEMPO_SELECCIONADO,
-                tiempoSeleccionado
+                temporizadorControlador
+                        .getTiempoSeleccionado()
         );
 
         outState.putLong(
                 ESTADO_TIEMPO_RESTANTE,
-                tiempoRestante
+                temporizadorControlador
+                        .getTiempoRestante()
         );
 
         outState.putBoolean(
                 ESTADO_EN_MARCHA,
-                temporizadorEnMarcha
+                temporizadorControlador
+                        .isTemporizadorEnMarcha()
         );
     }
 
